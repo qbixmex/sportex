@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import { ApiKeyMiddleware } from './middleware/api-key.middleware';
 import { UserController } from './user/user.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { TournamentsModule } from './tournaments/tournaments.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    TournamentsModule,
   ],
   controllers: [],
   providers: [],

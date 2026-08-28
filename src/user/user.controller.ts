@@ -43,7 +43,6 @@ export class UserController {
   }
 
   @Delete(':id')
-  @UseGuards(RoleGuard)
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.delete(id);
   }
