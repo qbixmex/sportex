@@ -1,13 +1,20 @@
 import { randomUUID } from 'node:crypto';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+import { ConfigService } from '@nestjs/config';
+import { UpdateUserDto, CreateUserDto } from './dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
 
   private users: Map<string, User> = new Map();
+
+  // constructor(
+  //   private readonly configService: ConfigService,
+  // ) {
+  //   const defaultLimit = configService.get<number>('defaultLimit');
+  //   console.log("DEFAULT LIMIT:", defaultLimit ?? 0);
+  // }
 
   findAll() {
     return Array.from(this.users.values());
