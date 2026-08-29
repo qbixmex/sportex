@@ -22,7 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.DB_USER ?? '',
       password: process.env.DB_PASSWORD ?? '',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),

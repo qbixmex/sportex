@@ -9,13 +9,15 @@ export class User {
     type: 'varchar',
     name: 'name',
     length: 200,
+    nullable: true,
   })
-  name!: string;
+  name?: string;
 
   @Column({
     type: 'varchar',
     name: 'username',
     length: 200,
+    nullable: true,
   })
   username?: string;
 

@@ -1,79 +1,183 @@
-import { randomUUID } from 'node:crypto';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { User } from './entities/user.entity';
+import bcrypt from 'bcryptjs';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
+  constructor(
+    private readonly configService: ConfigService,
 
-  private users: Map<string, User> = new Map();
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
+  ) {}
 
-  // constructor(
-  //   private readonly configService: ConfigService,
-  // ) {
-  //   const defaultLimit = configService.get<number>('defaultLimit');
-  //   console.log("DEFAULT LIMIT:", defaultLimit ?? 0);
-  // }
-
-  findAll() {
-    return Array.from(this.users.values());
+  async findAll() {
+    return await this.userRepository.find({
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        emailVerified: true,
+        imageUrl: true,
+        imagePublicId: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
-  findById(id: string): User {
-    if (!this.users.has(id)) {
+  async findById(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        imageUrl: true,
+        imagePublicId: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
       throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
     }
 
-    return this.users.get(id) as User;
+    return user;
   }
 
-  create(dto: CreateUserDto) {
-    const users = Array.from(this.users.values());
+  async findByUsername(username: string) {
+    const user = await this.userRepository.findOne({
+      where: { username },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        imageUrl: true,
+        imagePublicId: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
-    if (users.find(({ email }) => email === dto.email)) {
+    if (!user) {
+      throw new NotFoundException(
+        `¡ No se encuentra el usuario con su nombre de usuario: [${username}], en la base de datos !`
+      )
+    }
+
+    return user;
+  }
+
+  async create(dto: CreateUserDto) {
+    const emailExists = await this.userRepository.count({
+      where: {
+        email: dto.email,
+      }
+    });
+
+    if (emailExists > 0) {
       throw new BadRequestException(
         `¡ El usuario con el email: [${dto.email}] ya existe !`
       );
     }
 
-    const newUser = {
-      id: randomUUID(),
-      name: dto.name,
-      email: dto.email,
-      password: dto.password,
-      createdAt: new Date(),
-    };
+    try {
+      const newUser = this.userRepository.create({
+        ...dto,
+        password: bcrypt.hashSync(dto.password),
+      });
 
-    this.users.set(newUser.id, newUser);
+      await this.userRepository.save(newUser);
 
-    return {
-      message: 'Usuario creado satisfactoriamente',
-      data: this.users.get(newUser.id) as User,
-    };
+      const { password, ...user } = newUser;
+
+      return {
+        message: 'Usuario creado satisfactoriamente 👍',
+        data: user
+      }
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+    }
   }
 
-  update(id: string, dto: UpdateUserDto) {
-    const foundUser = this.findById(id);
+  async update(id: string, dto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        imageUrl: true,
+        imagePublicId: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    });
 
-    const updatedUser = {
-      ...foundUser,
-      name: dto.name as string,
-      email: dto.email as string,
-    };
+    if (!user) {
+      throw new NotFoundException(`¡ El usuario con id: [${id}], no existe en la base de datos !`)
+    }
 
-    this.users.set(id, updatedUser);
+    const updatedUser = this.userRepository.merge(user, dto);
 
-    return updatedUser;
+    try {
+      await this.userRepository.save(updatedUser);
+
+      return {
+        message: 'Usuario actualizado exitosamente 👍',
+        data: updatedUser,
+      }
+    } catch(error) {
+      console.log(error);
+      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+    }
   }
 
-  delete(id: string) {
-    const foundUser = this.findById(id);
+  async delete(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        imageUrl: true,
+        imagePublicId: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    });
 
-    this.users.delete(foundUser.id);
+    if (!user) {
+      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+    }
 
-    return {
-      message: 'Usuario eliminado satisfactoriamente',
-    };
+    try {
+      await this.userRepository.delete({ id: user.id });
+
+      return {
+        message: 'Usuario eliminado satisfactoriamente 👍',
+        user,
+      };
+    } catch(error) {
+      console.log(error);
+      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+    }
   }
 }
