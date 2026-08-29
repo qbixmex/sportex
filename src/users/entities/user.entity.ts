@@ -22,11 +22,13 @@ export class User {
   @Column({
     type: 'varchar',
     name: 'email',
+    unique: true,
   })
   email!: string;
 
   @Column({
     type: 'boolean',
+    name: 'email_verified',
     default: false,
     nullable: true,
   })
@@ -65,7 +67,7 @@ export class User {
   createdAt!: Date;
 
   @UpdateDateColumn({
-    name: 'updated_date',
+    name: 'updated_at',
     nullable: true,
   })
   updatedAt?: Date;

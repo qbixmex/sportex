@@ -1,9 +1,9 @@
 import { join } from 'node:path';
 import { ConfigModule } from '@nestjs/config';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UserModule } from './user/user.module';
+import { UsersModule } from './users/user.module';
 import { ApiKeyMiddleware } from './middleware/api-key.middleware';
-import { UserController } from './user/user.controller';
+import { UserController } from './users/user.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TournamentsModule } from './tournaments/tournaments.module';
 import { envConfiguration } from './config/env.config';
@@ -24,10 +24,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    UserModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    UsersModule,
     TournamentsModule,
   ],
   controllers: [],
