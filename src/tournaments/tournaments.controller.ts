@@ -8,10 +8,12 @@ import {
   Delete,
   ParseUUIDPipe,
   Version,
+  Query,
 } from '@nestjs/common';
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('tournaments')
 export class TournamentsController {
@@ -25,20 +27,14 @@ export class TournamentsController {
 
   @Version('1')
   @Get()
-  findAll() {
-    return this.tournamentsService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.tournamentsService.findAll(paginationDto);
   }
 
   @Version('1')
   @Get(':id')
-  findById(@Param('id', ParseUUIDPipe) id: string) {
+  findByOne(@Param('id') id: string) {
     return this.tournamentsService.findById(id);
-  }
-
-  @Version('1')
-  @Get('/permalink/:permalink')
-  findByPermalink(@Param('permalink') permalink: string) {
-    return this.tournamentsService.findByPermalink(permalink);
   }
 
   @Version('1')

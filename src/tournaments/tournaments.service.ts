@@ -9,6 +9,8 @@ import { QueryFailedError, Repository } from 'typeorm';
 import { CreateTournamentDto, UpdateTournamentDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tournament } from './entities/tournament.entity';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { validate as isUUID } from 'uuid';
 
 @Injectable()
 export class TournamentsService {
@@ -19,38 +21,41 @@ export class TournamentsService {
     private readonly tournamentRepository: Repository<Tournament>,
   ) { }
 
-  async findAll() {
+  async findAll({ limit = 0, offset = 0 }: PaginationDto) {
     try {
-      return await this.tournamentRepository.find();
+      const [tournamentsCount, tournaments] = await Promise.all([
+        this.tournamentRepository.count(),
+        this.tournamentRepository.find({
+          take: limit,
+          skip: offset,
+        }),
+      ]);
+
+      return {
+        tournaments,
+        pagination: {
+          total: tournamentsCount,
+        },
+      };
     } catch (error) {
       this.handleExceptions(error);
     }
   }
 
   async findById(id: string) {
-    try {
-      const tournament = await this.tournamentRepository.findOne({
-        where: { id },
-      });
+    let tournament: Tournament | null = null;
 
-      if (!tournament) {
-        throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+    try {
+      if (isUUID(id)) {
+        tournament = await this.tournamentRepository.findOneBy({ id });
+      } else {
+        tournament = await this.tournamentRepository.findOneBy({ permalink: id });
       }
 
-      return tournament;
-    } catch (error) {
-      this.handleExceptions(error);
-    }
-  }
-
-  async findByPermalink(permalink: string) {
-    try {
-      const tournament = await this.tournamentRepository.findOne({
-        where: { permalink },
-      });
-
       if (!tournament) {
-        throw new NotFoundException(`¡ El usuario con el enlace permanente: [${permalink}], no existe en la base de datos !`)
+        throw new NotFoundException(
+          `¡El usuario con identificador: [${id}], no existe en la base de datos !`
+        );
       }
 
       return tournament;

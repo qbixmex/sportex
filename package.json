@@ -11,7 +11,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",   
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm -- migration:generate ./src/database/migrations/$npm_config_name -d ./src/database/data-source.ts --esm --timestamp",
     "migration:run": "npm run typeorm -- migration:run -d ./src/database/data-source.ts",
@@ -35,7 +35,8 @@
     "class-validator": "^0.15.1",
     "pg": "^8.23.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "uuid": "^14.0.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.6",

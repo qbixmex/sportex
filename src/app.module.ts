@@ -8,6 +8,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TournamentsModule } from './tournaments/tournaments.module';
 import { envConfiguration } from './config/env.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     UsersModule,
     TournamentsModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
