@@ -45,23 +45,26 @@ export class TournamentsService {
   async findById(id: string) {
     let tournament: Tournament | null = null;
 
-    try {
-      if (isUUID(id)) {
-        tournament = await this.tournamentRepository.findOneBy({ id });
-      } else {
-        tournament = await this.tournamentRepository.findOneBy({ permalink: id });
-      }
-
-      if (!tournament) {
-        throw new NotFoundException(
-          `¡El usuario con identificador: [${id}], no existe en la base de datos !`
-        );
-      }
-
-      return tournament;
-    } catch (error) {
-      this.handleExceptions(error);
+    if (isUUID(id)) {
+      tournament = await this.tournamentRepository.findOneBy({ id });
+    } else {
+      const queryBuilder = this.tournamentRepository.createQueryBuilder();
+      tournament = await queryBuilder
+        .where('permalink = :permalink', {
+          permalink: id.toLowerCase(),
+        })
+        .getOne();
     }
+
+    if (!tournament) {
+      throw new NotFoundException(
+        '¡El usuario con '
+         + (isUUID(id) ? 'id ' : 'enlace permanente ')
+         + `[${id}] no existe en la base de datos !`
+      );
+    }
+
+    return tournament;
   }
 
   async create(dto: CreateTournamentDto) {
