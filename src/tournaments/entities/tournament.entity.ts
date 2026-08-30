@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -15,6 +16,7 @@ export class Tournament {
     type: 'varchar',
     name: 'name',
     length: 200,
+    unique: true,
   })
   name!: string;
 
@@ -110,4 +112,21 @@ export class Tournament {
     nullable: true,
   })
   updatedAt?: Date;
+
+  @BeforeInsert()
+  transformPermalink() {
+    if (!this.permalink) {
+      this.permalink = this.name;
+    }
+
+    this.permalink = this.permalink.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // remove accents
+      .replace(/\.[^/.]+$/, '') // removes extension
+      .trim() // removes trailing spaces
+      .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric characters with dashes
+      .replace(/^-+|-+$/g, ''); // remove leading and trailing dashes
+  }
+
+  // @BeforeUpdate()
 }

@@ -20,31 +20,43 @@ export class TournamentsService {
   ) { }
 
   async findAll() {
-    return await this.tournamentRepository.find();
+    try {
+      return await this.tournamentRepository.find();
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
   async findById(id: string) {
-    const tournament = await this.tournamentRepository.findOne({
-      where: { id },
-    });
+    try {
+      const tournament = await this.tournamentRepository.findOne({
+        where: { id },
+      });
 
-    if (!tournament) {
-      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+      if (!tournament) {
+        throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+      }
+
+      return tournament;
+    } catch (error) {
+      this.handleExceptions(error);
     }
-
-    return tournament;
   }
 
   async findByPermalink(permalink: string) {
-    const tournament = await this.tournamentRepository.findOne({
-      where: { permalink },
-    });
+    try {
+      const tournament = await this.tournamentRepository.findOne({
+        where: { permalink },
+      });
 
-    if (!tournament) {
-      throw new NotFoundException(`¡ El usuario con el enlace permanente: [${permalink}], no existe en la base de datos !`)
+      if (!tournament) {
+        throw new NotFoundException(`¡ El usuario con el enlace permanente: [${permalink}], no existe en la base de datos !`)
+      }
+
+      return tournament;
+    } catch (error) {
+      this.handleExceptions(error);
     }
-
-    return tournament;
   }
 
   async create(dto: CreateTournamentDto) {
@@ -54,8 +66,20 @@ export class TournamentsService {
 
     if (tournamentNameCount > 0) {
       throw new BadRequestException(
-        `¡ El torneo con el nombre ${dto.name} ya existe, elija otro !`
+        `¡ El torneo con el nombre (${dto.name}) ya existe, elija otro !`
       );
+    }
+
+    if (dto.permalink) {
+      const tournamentPermalinkCount = await this.tournamentRepository.count({
+        where: { permalink: dto.permalink },
+      });
+
+      if (tournamentPermalinkCount > 0) {
+        throw new BadRequestException(
+          `¡ El torneo con el nombre permanente (${dto.permalink}) ya existe, elija otro !`
+        );
+      }
     }
 
     try {
@@ -68,10 +92,8 @@ export class TournamentsService {
         data: newTournament
       }
     } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+      this.handleExceptions(error);
     }
-
   }
 
   async update(id: string, dto: UpdateTournamentDto) {
@@ -95,10 +117,7 @@ export class TournamentsService {
         data: updatedTournament,
       }
     } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException(
-        '¡ Error desconocido, revisa los logs para mas información !'
-      );
+      this.handleExceptions(error);
     }
   }
 
@@ -121,8 +140,7 @@ export class TournamentsService {
         user: tournament,
       };
     } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+      this.handleExceptions(error);
     }
   }
 

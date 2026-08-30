@@ -15,10 +15,10 @@ export class CreateTournamentDto {
   @MinLength(4)
   name!: string;
 
-  @IsString()
+  @IsOptional()
   @IsString()
   @MinLength(4)
-  permalink!: string;
+  permalink?: string;
 
   @IsString()
   @IsUrl({ protocols: ['https'] })
