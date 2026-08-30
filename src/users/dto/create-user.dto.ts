@@ -1,8 +1,10 @@
 import {
   IsBoolean,
   IsEmail,
+  IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
   MaxLength,
   MinLength,
 } from "class-validator";
@@ -12,6 +14,7 @@ export class CreateUserDto {
   @IsEmail()
   email!: string;
 
+  @IsNotEmpty()
   @IsString()
   @MinLength(8)
   @MaxLength(100)
@@ -29,6 +32,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
+  @IsUrl({ protocols: ['https'] })
   @MinLength(1)
   imageUrl?: string;
 

@@ -1,26 +1,120 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTournamentDto } from './dto/create-tournament.dto';
-import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { CreateTournamentDto, UpdateTournamentDto } from './dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Tournament } from './entities/tournament.entity';
 
 @Injectable()
 export class TournamentsService {
-  create(dto: CreateTournamentDto) {
-    return 'This action adds a new tournament';
+  constructor(
+    @InjectRepository(Tournament)
+    private readonly tournamentRepository: Repository<Tournament>,
+  ) { }
+
+  async findAll() {
+    return await this.tournamentRepository.find();
   }
 
-  findAll() {
-    return `This action returns all tournaments`;
+  async findById(id: string) {
+    const tournament = await this.tournamentRepository.findOne({
+      where: { id },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+    }
+
+    return tournament;
   }
 
-  findOne(id: string) {
-    return `Tournament ID: [${id}]`;
+  async findByPermalink(permalink: string) {
+    const tournament = await this.tournamentRepository.findOne({
+      where: { permalink },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException(`¡ El usuario con el enlace permanente: [${permalink}], no existe en la base de datos !`)
+    }
+
+    return tournament;
   }
 
-  update(id: string, dto: UpdateTournamentDto) {
-    return `Tournament ID: [${id}], updated`;
+  async create(dto: CreateTournamentDto) {
+    const tournamentNameCount = await this.tournamentRepository.count({
+      where: { name: dto.name },
+    });
+
+    if (tournamentNameCount > 0) {
+      throw new BadRequestException(
+        `¡ El torneo con el nombre ${dto.name} ya existe, elija otro !`
+      );
+    }
+
+    try {
+      const newTournament = this.tournamentRepository.create(dto);
+
+      await this.tournamentRepository.save(newTournament);
+
+      return {
+        message: '¡ Torneo creado satisfactoriamente 👍 !',
+        data: newTournament
+      }
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+    }
+
   }
 
-  remove(id: string) {
-    return `Tournament with ID: [${id}], deleted`;
+  async update(id: string, dto: UpdateTournamentDto) {
+    const tournament = await this.tournamentRepository.findOne({
+      where: { id },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException(
+        `¡ El torneo con id: [${id}], no existe en la base de datos !`
+      );
+    }
+
+    const updatedTournament = this.tournamentRepository.merge(tournament, dto);
+
+    try {
+      await this.tournamentRepository.save(updatedTournament);
+
+      return {
+        message: 'Torneo actualizado exitosamente 👍',
+        data: updatedTournament,
+      }
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        '¡ Error desconocido, revisa los logs para mas información !'
+      );
+    }
+  }
+
+  async remove(id: string) {
+    const tournament = await this.tournamentRepository.findOne({
+      where: { id },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException(
+        `El torneo con id: [${id}], no existe en la base de datos`
+      );
+    }
+
+    try {
+      await this.tournamentRepository.delete({ id: tournament.id });
+
+      return {
+        message: 'Torneo eliminado satisfactoriamente 👍',
+        user: tournament,
+      };
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
+    }
   }
 }

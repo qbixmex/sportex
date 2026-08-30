@@ -31,8 +31,14 @@ export class TournamentsController {
 
   @Version('1')
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.tournamentsService.findOne(id);
+  findById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.tournamentsService.findById(id);
+  }
+
+  @Version('1')
+  @Get('/permalink/:permalink')
+  findByPermalink(@Param('permalink') permalink: string) {
+    return this.tournamentsService.findByPermalink(permalink);
   }
 
   @Version('1')

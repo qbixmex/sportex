@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { User } from './entities/user.entity';
 import bcrypt from 'bcryptjs';
@@ -9,8 +8,6 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UserService {
   constructor(
-    private readonly configService: ConfigService,
-
     @InjectRepository(User)
     private readonly userRepository: Repository<User>
   ) {}
@@ -81,13 +78,13 @@ export class UserService {
   }
 
   async create(dto: CreateUserDto) {
-    const emailExists = await this.userRepository.count({
+    const userEmailCount = await this.userRepository.count({
       where: {
         email: dto.email,
       }
     });
 
-    if (emailExists > 0) {
+    if (userEmailCount > 0) {
       throw new BadRequestException(
         `¡ El usuario con el email: [${dto.email}] ya existe !`
       );
@@ -106,7 +103,7 @@ export class UserService {
       return {
         message: 'Usuario creado satisfactoriamente 👍',
         data: user
-      }
+      };
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
@@ -130,7 +127,9 @@ export class UserService {
     });
 
     if (!user) {
-      throw new NotFoundException(`¡ El usuario con id: [${id}], no existe en la base de datos !`)
+      throw new NotFoundException(
+        `¡ El usuario con id: [${id}], no existe en la base de datos !`
+      );
     }
 
     const updatedUser = this.userRepository.merge(user, {
@@ -172,7 +171,7 @@ export class UserService {
     });
 
     if (!user) {
-      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
+      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`);
     }
 
     try {
