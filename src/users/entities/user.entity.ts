@@ -18,6 +18,7 @@ export class User {
     name: 'username',
     length: 200,
     nullable: true,
+    unique: true,
   })
   username?: string;
 
