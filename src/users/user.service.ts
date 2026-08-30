@@ -95,7 +95,7 @@ export class UserService {
 
     try {
       const newUser = this.userRepository.create({
-        ...dto,
+        email: dto.email,
         password: bcrypt.hashSync(dto.password),
       });
 
@@ -133,7 +133,14 @@ export class UserService {
       throw new NotFoundException(`¡ El usuario con id: [${id}], no existe en la base de datos !`)
     }
 
-    const updatedUser = this.userRepository.merge(user, dto);
+    const updatedUser = this.userRepository.merge(user, {
+      name: dto.name,
+      username: dto.username,
+      email: dto.email,
+      imageUrl: dto.imageUrl,
+      imagePublicId: dto.imagePublicId,
+      isActive: Boolean(dto.isActive),
+    });
 
     try {
       await this.userRepository.save(updatedUser);

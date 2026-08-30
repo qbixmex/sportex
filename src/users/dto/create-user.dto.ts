@@ -16,4 +16,28 @@ export class CreateUserDto {
   @MinLength(8)
   @MaxLength(100)
   password!: string;
+
+  @IsString()
+  @IsOptional()
+  @MinLength(3)
+  name?: string;
+
+  @IsString()
+  @IsOptional()
+  @MinLength(3)
+  username?: string;
+
+  @IsString()
+  @IsOptional()
+  @MinLength(1)
+  imageUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  @MinLength(1)
+  imagePublicId?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  isActive?: string;
 }
