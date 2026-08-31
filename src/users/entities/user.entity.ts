@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -89,4 +91,19 @@ export class User {
     default: ['user'],
   })
   roles!: string[];
+
+  @BeforeInsert()
+  checkFieldsBeforeInsert() {
+    this.checkFields();
+  }
+
+  @BeforeUpdate()
+  checkFieldsBeforeUpdate() {
+    this.checkFields();
+  }
+
+  private checkFields() {
+    this.email = this.email.toLowerCase().trim();
+    this.password = this.password.trim();
+  }
 }
