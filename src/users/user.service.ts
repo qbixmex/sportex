@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { Repository, QueryFailedError } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { hashSync } from 'bcryptjs';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { User } from './entities/user.entity';
-import bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -99,20 +99,33 @@ export class UserService {
 
   async create(dto: CreateUserDto) {
     try {
+      const { password, ...userData } = dto;
+
       const newUser = this.userRepository.create({
-        email: dto.email,
-        password: bcrypt.hashSync(dto.password),
+        email: userData.email,
+        password: hashSync(password, 10),
+        name: userData.name,
+        username: userData.username,
+        imageUrl: userData.imageUrl,
+        imagePublicId: userData.imagePublicId,
       });
 
       await this.userRepository.save(newUser);
 
-      const userWithoutPassword = Object.fromEntries(
-        Object.entries(newUser).filter(([key]) => key !== 'password'),
-      );
-
       return {
         message: 'Usuario creado satisfactoriamente 👍',
-        data: userWithoutPassword,
+        data: {
+          id: newUser.id,
+          name: newUser.name,
+          username: newUser.username,
+          email: newUser.email,
+          imageUrl: newUser.imageUrl,
+          imagePublicId: newUser.imagePublicId,
+          isActive: newUser.isActive,
+          roles: newUser.roles,
+          createdAt: newUser.createdAt,
+          updatedAt: newUser.updatedAt,
+        },
       };
     } catch (error) {
       this.handleExceptions(error);
@@ -194,7 +207,7 @@ export class UserService {
     }
   }
 
-  private handleExceptions(error: unknown) {
+  private handleExceptions(error: unknown): never {
     if (error instanceof QueryFailedError) {
       this.logger.error(`📌 Database Error (TypeORM):\n${error.message}`);
       this.logger.error(`Postgres Code: ${error.driverError?.code}`);

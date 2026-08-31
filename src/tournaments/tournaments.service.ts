@@ -150,7 +150,7 @@ export class TournamentsService {
     }
   }
 
-  private handleExceptions(error: unknown) {
+  private handleExceptions(error: unknown): never {
     if (error instanceof QueryFailedError) {
       this.logger.error(`📌 Database Error (TypeORM):\n${error.message}`);
       this.logger.error(`Postgres Code: ${error.driverError?.code}`);
