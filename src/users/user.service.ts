@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { hashSync } from 'bcryptjs';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { User } from './entities/user.entity';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class UserService {
@@ -20,9 +21,10 @@ export class UserService {
     private readonly userRepository: Repository<User>
   ) { }
 
-  async findAll() {
-    try {
-      return await this.userRepository.find({
+  async findAll({ page = 1, take = 10 }: PaginationDto) {
+    const [usersCount, users] = await Promise.all([
+      this.userRepository.count(),
+      this.userRepository.find({
         select: {
           id: true,
           name: true,
@@ -35,37 +37,41 @@ export class UserService {
           createdAt: true,
           updatedAt: true,
         },
-      });
-    } catch (error) {
-      this.handleExceptions(error);
+        take,
+        skip: (page - 1) * take,
+      }),
+    ]);
+
+    return {
+      users,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(usersCount / take)
+      },
     }
   }
 
   async findById(id: string) {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { id },
-        select: {
-          id: true,
-          name: true,
-          username: true,
-          email: true,
-          imageUrl: true,
-          imagePublicId: true,
-          isActive: true,
-          createdAt: true,
-          updatedAt: true,
-        },
-      });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        imageUrl: true,
+        imagePublicId: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
-      if (!user) {
-        throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
-      }
-
-      return user;
-    } catch (error) {
-      this.handleExceptions(error);
+    if (!user) {
+      throw new NotFoundException(`El usuario con id: [${id}], no existe en la base de datos`)
     }
+
+    return user;
   }
 
   async findByUsername(username: string) {
@@ -140,8 +146,10 @@ export class UserService {
         name: true,
         username: true,
         email: true,
+        emailVerified: true,
         imageUrl: true,
         imagePublicId: true,
+        roles: true,
         isActive: true,
         createdAt: true,
         updatedAt: true,
@@ -158,9 +166,11 @@ export class UserService {
       name: dto.name,
       username: dto.username,
       email: dto.email,
+      emailVerified: dto.emailVerified,
       imageUrl: dto.imageUrl,
       imagePublicId: dto.imagePublicId,
-      isActive: Boolean(dto.isActive),
+      isActive: dto.isActive,
+      roles: dto.roles,
     });
 
     try {

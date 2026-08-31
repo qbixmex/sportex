@@ -21,13 +21,13 @@ export class TournamentsService {
     private readonly tournamentRepository: Repository<Tournament>,
   ) { }
 
-  async findAll({ limit = 0, offset = 0 }: PaginationDto) {
+  async findAll({ page = 1, take = 0 }: PaginationDto) {
     try {
       const [tournamentsCount, tournaments] = await Promise.all([
         this.tournamentRepository.count(),
         this.tournamentRepository.find({
-          take: limit,
-          skip: offset,
+          take,
+          skip: (page - 1) * take,
         }),
       ]);
 
