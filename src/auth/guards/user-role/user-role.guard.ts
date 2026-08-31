@@ -7,13 +7,14 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { User } from '../../../users/entities/user.entity';
+import { META_ROLES } from '../../decorators/role-protected.decorator';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const validRoles: string[] = this.reflector.get('roles', context.getHandler());
+    const validRoles: string[] = this.reflector.get(META_ROLES, context.getHandler());
     const request = context.switchToHttp().getRequest();
     const user = request.user as User;
 

@@ -14,6 +14,8 @@ import { LoginUserDto, RegisterUserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './decorators/get-user.decorator';
 import { UserRoleGuard } from './guards/user-role/user-role.guard';
+import { RoleProtected } from './decorators';
+import { VALID_ROLES } from './enums';
 
 @Controller('auth')
 export class AuthController {
@@ -34,7 +36,7 @@ export class AuthController {
 
   @Version('1')
   @Get('private')
-  @SetMetadata('roles', ['user', 'admin'])
+  @RoleProtected(VALID_ROLES.ADMIN)
   @UseGuards(AuthGuard(), UserRoleGuard)
   testPrivateRoute(@GetUser('email') email: string) {
     return {
