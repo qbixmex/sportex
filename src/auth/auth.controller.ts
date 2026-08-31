@@ -1,14 +1,16 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
+  UseGuards,
   Version,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginUserDto } from './dto/login-user.dto';
-import { RegisterUserDto } from './dto';
+import { LoginUserDto, RegisterUserDto } from './dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -25,5 +27,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
+  }
+
+  @Version('1')
+  @Get('private')
+  @UseGuards(AuthGuard())
+  testPrivateRoute() {
+    return {
+      ok: true,
+      message: 'Ruta Privada 🔐'
+    };
   }
 }

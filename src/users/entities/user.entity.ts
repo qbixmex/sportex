@@ -103,7 +103,11 @@ export class User {
   }
 
   private checkFields() {
-    this.email = this.email.toLowerCase().trim();
-    this.password = this.password.trim();
+    if (this.email) {
+      this.email = this.email.toLowerCase().trim();
+    }
+    if (this.password) {
+      this.password = this.password.trim();
+    }
   }
 }
