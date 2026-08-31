@@ -50,9 +50,7 @@ export class TournamentsService {
     } else {
       const queryBuilder = this.tournamentRepository.createQueryBuilder();
       tournament = await queryBuilder
-        .where('permalink = :permalink', {
-          permalink: id.toLowerCase(),
-        })
+        .where('permalink = :permalink', { permalink: id.toLowerCase() })
         .getOne();
     }
 

@@ -1,5 +1,6 @@
 import {
   BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -114,12 +115,21 @@ export class Tournament {
   updatedAt?: Date;
 
   @BeforeInsert()
-  transformPermalink() {
+  transformPermalinkInsert() {
     if (!this.permalink) {
       this.permalink = this.name;
     }
 
-    this.permalink = this.permalink.toLowerCase()
+    this.permalink = this.formatPermalink(this.permalink);
+  }
+
+  @BeforeUpdate()
+  transformPermalinkUpdate() {
+    this.permalink = this.formatPermalink(this.permalink);
+  }
+
+  private formatPermalink(value: string) {
+    return value.toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '') // remove accents
       .replace(/\.[^/.]+$/, '') // removes extension
@@ -127,6 +137,4 @@ export class Tournament {
       .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric characters with dashes
       .replace(/^-+|-+$/g, ''); // remove leading and trailing dashes
   }
-
-  // @BeforeUpdate()
 }
