@@ -9,6 +9,7 @@ declare global {
       DB_NAME: string | null;
       DB_USER: string | null;
       DB_PASSWORD: string | null;
+      AUTH_SECRET: string | null;
     }
   }
 }

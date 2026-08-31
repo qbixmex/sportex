@@ -17,7 +17,16 @@ export class AuthService {
   async login(dto: LoginUserDto) {
     const user = await this.userRepository.findOne({
       where: { email: dto.email },
-      select: { email: true, password: true },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        password: true,
+        imageUrl: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     if (!user) {
@@ -36,6 +45,7 @@ export class AuthService {
 
     return {
       message: 'Usuario autentificado satisfactoriamente 👍🎉',
+      data,
       // TODO return JWT
       token: 'lorem ipsum',
     };

@@ -69,3 +69,18 @@ npx prisma generate
 ```bash
 npx prisma studio
 ```
+
+## Generate Auth Secret Key
+
+```bash
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+
+# It will generate something like this:
+'1f135548a57a4e2c043d6eb6a6b5e144 and more ...'
+
+# ------- Alternative with Open SSL -------
+openssl rand -base64 32
+
+# It will generate something like this:
+'W4w2IBUAoVqqTI3ODmyvmJa ...'
+```
