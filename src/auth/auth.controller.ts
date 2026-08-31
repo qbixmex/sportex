@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  SetMetadata,
   UseGuards,
   Version,
 } from '@nestjs/common';
@@ -12,7 +13,7 @@ import { AuthService } from './auth.service';
 import { LoginUserDto, RegisterUserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './decorators/get-user.decorator';
-import { RawHeaders } from '../common/decorators/raw-headers.decorator';
+import { UserRoleGuard } from './guards/user-role/user-role.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -33,15 +34,12 @@ export class AuthController {
 
   @Version('1')
   @Get('private')
-  @UseGuards(AuthGuard())
-  testPrivateRoute(
-    @GetUser('email') email: string,
-    @RawHeaders() rawHeaders: string[],
-  ) {
+  @SetMetadata('roles', ['user', 'admin'])
+  @UseGuards(AuthGuard(), UserRoleGuard)
+  testPrivateRoute(@GetUser('email') email: string) {
     return {
       ok: true,
       message: 'Ruta Privada 🔐',
-      headers: rawHeaders,
       data: email,
     };
   }
