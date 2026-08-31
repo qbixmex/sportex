@@ -43,7 +43,7 @@ export class AuthService {
           createdAt: newUser.createdAt,
           updatedAt: newUser.updatedAt,
         },
-        token: this.getJwtToken({ email: newUser.email }),
+        token: this.getJwtToken({ id: newUser.id }),
       };
     } catch (error) {
       this.handleExceptions(error);
@@ -82,7 +82,7 @@ export class AuthService {
     return {
       message: 'Usuario autentificado satisfactoriamente 👍🎉',
       data,
-      token: this.getJwtToken({ email: user.email }),
+      token: this.getJwtToken({ id: user.id }),
     };
   }
 
