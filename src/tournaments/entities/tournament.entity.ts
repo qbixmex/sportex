@@ -1,9 +1,12 @@
+import { Category } from '@/categories/entities/category.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
@@ -113,6 +116,15 @@ export class Tournament {
     nullable: true,
   })
   updatedAt?: Date;
+
+  // Relationships
+  @ManyToMany(() => Category, (category) => category.tournaments)
+  @JoinTable({
+    name: 'category_tournament',
+    joinColumn: { name: 'tournament_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
+  })
+  categories!: Category[];
 
   @BeforeInsert()
   transformPermalinkInsert() {

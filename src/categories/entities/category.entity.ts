@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from "typeorm";
+import { Tournament } from "@/tournaments/entities/tournament.entity";
 
 @Entity({ name: 'categories' })
 export class Category {
@@ -34,4 +36,8 @@ export class Category {
     nullable: true,
   })
   updatedAt?: Date;
+
+  // Relationships
+  @ManyToMany(() => Tournament, (tournament) => tournament.categories)
+  tournaments!: Tournament[];
 }
