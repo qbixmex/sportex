@@ -1,24 +1,22 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
-  Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository, QueryFailedError } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hashSync } from 'bcryptjs';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { User } from './entities/user.entity';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class UserService {
-  private readonly logger = new Logger('UsersService');
-
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    private readonly commonService: CommonService,
   ) { }
 
   async findAll({ page = 1, take = 10 }: PaginationDto) {
@@ -99,7 +97,7 @@ export class UserService {
 
       return user;
     } catch(error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
@@ -134,7 +132,7 @@ export class UserService {
         },
       };
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
@@ -181,7 +179,7 @@ export class UserService {
         data: updatedUser,
       }
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
@@ -213,26 +211,7 @@ export class UserService {
         user,
       };
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
-  }
-
-  private handleExceptions(error: unknown): never {
-    if (error instanceof QueryFailedError) {
-      this.logger.error(`📌 Database Error (TypeORM):\n${error.message}`);
-      this.logger.error(`Postgres Code: ${error.driverError?.code}`);
-      if (error.driverError?.code === '23505') {
-        const columnError = (error.driverError?.detail as string).split('=')[1].split(' ')[0];
-        const errorMessage = `${columnError} ya existe, elija otro`;
-        this.logger.error(errorMessage);
-        throw new BadRequestException('Database Error', errorMessage);
-      }
-    } else if (error instanceof Error) {
-      this.logger.error(`📌 Message:\n${error.message}`);
-      this.logger.error(`Stack trace:\n${error.stack}`);
-    } else {
-      this.logger.error(error);
-    }
-    throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
   }
 }

@@ -1,24 +1,22 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
-  Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { QueryFailedError, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateTournamentDto, UpdateTournamentDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tournament } from './entities/tournament.entity';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { validate as isUUID } from 'uuid';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class TournamentsService {
-  private readonly logger = new Logger('TournamentsService');
-
   constructor(
     @InjectRepository(Tournament)
     private readonly tournamentRepository: Repository<Tournament>,
+    private readonly commonService: CommonService,
   ) { }
 
   async findAll({ page = 1, take = 10 }: PaginationDto) {
@@ -39,21 +37,26 @@ export class TournamentsService {
         },
       };
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
   async findById(id: string) {
-    let tournament: Tournament | null = null;
+    const queryBuilder = this.tournamentRepository
+      .createQueryBuilder('tournament')
+      .leftJoin('tournament.categories', 'category')
+      .addSelect(['category.id', 'category.name', 'category.permalink']);
+
 
     if (isUUID(id)) {
-      tournament = await this.tournamentRepository.findOneBy({ id });
+      queryBuilder.where('tournament.id = :id', { id });
     } else {
-      const queryBuilder = this.tournamentRepository.createQueryBuilder();
-      tournament = await queryBuilder
-        .where('permalink = :permalink', { permalink: id.toLowerCase() })
-        .getOne();
+      queryBuilder.where('tournament.permalink = :permalink', {
+        permalink: id.toLowerCase(),
+      });
     }
+
+    const tournament = await queryBuilder.getOne();
 
     if (!tournament) {
       throw new NotFoundException(
@@ -99,7 +102,7 @@ export class TournamentsService {
         data: newTournament
       };
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
@@ -124,7 +127,7 @@ export class TournamentsService {
         data: updatedTournament,
       }
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
@@ -147,26 +150,7 @@ export class TournamentsService {
         user: tournament,
       };
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
-  }
-
-  private handleExceptions(error: unknown): never {
-    if (error instanceof QueryFailedError) {
-      this.logger.error(`📌 Database Error (TypeORM):\n${error.message}`);
-      this.logger.error(`Postgres Code: ${error.driverError?.code}`);
-      if (error.driverError?.code === '23505') {
-        const columnError = (error.driverError?.detail as string).split('=')[1].split(' ')[0];
-        const errorMessage = `${columnError} ya existe, elija otro`;
-        this.logger.error(errorMessage);
-        throw new BadRequestException('Database Error', errorMessage);
-      }
-    } else if (error instanceof Error) {
-      this.logger.error(`📌 Message:\n${error.message}`);
-      this.logger.error(`Stack trace:\n${error.stack}`);
-    } else {
-      this.logger.error(error);
-    }
-    throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
   }
 }

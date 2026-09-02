@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Tournament } from './entities/tournament.entity';
 import { AuthModule } from '@/auth/auth.module';
+import { CommonModule } from '@/common/common.module';
 
 @Module({
   controllers: [TournamentsController],
@@ -13,6 +14,7 @@ import { AuthModule } from '@/auth/auth.module';
     ConfigModule,
     TypeOrmModule.forFeature([Tournament]),
     AuthModule,
+    CommonModule,
   ],
 })
 export class TournamentsModule {}

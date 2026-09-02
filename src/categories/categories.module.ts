@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { AuthModule } from '@/auth/auth.module';
+import { CommonModule } from '@/common/common.module';
 
 @Module({
   controllers: [CategoriesController],
@@ -13,6 +14,7 @@ import { AuthModule } from '@/auth/auth.module';
     ConfigModule,
     TypeOrmModule.forFeature([Category]),
     AuthModule,
+    CommonModule,
   ],
 })
 export class CategoriesModule {}

@@ -26,6 +26,7 @@ import { CategoriesModule } from './categories/categories.module';
       password: process.env.DB_PASSWORD ?? '',
       autoLoadEntities: true,
       synchronize: false,
+      logging: false, // for debugging sql sentences
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),

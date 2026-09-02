@@ -1,21 +1,21 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
-import { QueryFailedError, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { compareSync, hashSync } from 'bcryptjs';
 import { RegisterUserDto, LoginUserDto } from './dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class AuthService {
-  private readonly logger = new Logger('AuthService');
-
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
     private readonly jwtService: JwtService,
+    private readonly commonService: CommonService,
   ) { }
 
   async register(dto: RegisterUserDto) {
@@ -46,7 +46,7 @@ export class AuthService {
         token: this.getJwtToken({ id: newUser.id }),
       };
     } catch (error) {
-      this.handleExceptions(error);
+      this.commonService.handleExceptions(error);
     }
   }
 
@@ -95,24 +95,5 @@ export class AuthService {
 
   private getJwtToken(jwtPayload: JwtPayload): string {
     return this.jwtService.sign(jwtPayload);
-  }
-
-  private handleExceptions(error: unknown): never {
-    if (error instanceof QueryFailedError) {
-      this.logger.error(`📌 Database Error (TypeORM):\n${error.message}`);
-      this.logger.error(`Postgres Code: ${error.driverError?.code}`);
-      if (error.driverError?.code === '23505') {
-        const columnError = (error.driverError?.detail as string).split('=')[1].split(' ')[0];
-        const errorMessage = `${columnError} ya existe, elija otro`;
-        this.logger.error(errorMessage);
-        throw new BadRequestException('Database Error', errorMessage);
-      }
-    } else if (error instanceof Error) {
-      this.logger.error(`📌 Message:\n${error.message}`);
-      this.logger.error(`Stack trace:\n${error.stack}`);
-    } else {
-      this.logger.error(error);
-    }
-    throw new InternalServerErrorException('¡ Error desconocido, revisa los logs para mas información !');
   }
 }
