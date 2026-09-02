@@ -12,6 +12,7 @@ import { LoginUserDto, RegisterUserDto } from './dto';
 import { GetUser } from './decorators/get-user.decorator';
 import { VALID_ROLES } from './enums';
 import { Auth } from './decorators/auth.decorator';
+import { User } from '../users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -31,13 +32,9 @@ export class AuthController {
   }
 
   @Version('1')
-  @Get('private')
-  @Auth(VALID_ROLES.ADMIN)
-  testPrivateRoute(@GetUser('email') email: string) {
-    return {
-      ok: true,
-      message: 'Ruta Privada 🔐',
-      data: email,
-    };
+  @Get('check-status')
+  @Auth(VALID_ROLES.USER)
+  checkAuthStatus(@GetUser() user: User) {
+    return this.authService.checkStatus(user);
   }
 }

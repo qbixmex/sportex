@@ -45,8 +45,8 @@ export class UserService {
     return {
       users,
       pagination: {
-        currentPage: page,
-        totalPages: Math.ceil(usersCount / take)
+        currentPage: +page,
+        totalPages: Math.ceil(usersCount / take),
       },
     }
   }

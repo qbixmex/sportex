@@ -13,8 +13,11 @@ import {
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginationDto } from '@/common/dto/pagination.dto';
+import { Auth } from '@/auth/decorators/auth.decorator';
+import { VALID_ROLES } from '@/auth/enums';
 
+@Auth(VALID_ROLES.ADMIN)
 @Controller('tournaments')
 export class TournamentsController {
   constructor(private readonly tournamentsService: TournamentsService) {}

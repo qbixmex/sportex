@@ -4,8 +4,8 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
 import { QueryFailedError, Repository } from 'typeorm';
 import { compareSync, hashSync } from 'bcryptjs';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { RegisterUserDto, LoginUserDto } from './dto';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -82,6 +82,13 @@ export class AuthService {
     return {
       message: 'Usuario autentificado satisfactoriamente 👍🎉',
       data,
+      token: this.getJwtToken({ id: user.id }),
+    };
+  }
+
+  async checkStatus(user: User) {
+    return {
+      ...user,
       token: this.getJwtToken({ id: user.id }),
     };
   }

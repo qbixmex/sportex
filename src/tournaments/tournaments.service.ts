@@ -21,7 +21,7 @@ export class TournamentsService {
     private readonly tournamentRepository: Repository<Tournament>,
   ) { }
 
-  async findAll({ page = 1, take = 0 }: PaginationDto) {
+  async findAll({ page = 1, take = 10 }: PaginationDto) {
     try {
       const [tournamentsCount, tournaments] = await Promise.all([
         this.tournamentRepository.count(),
@@ -34,7 +34,8 @@ export class TournamentsService {
       return {
         tournaments,
         pagination: {
-          total: tournamentsCount,
+        currentPage: +page,
+          totalPages: Math.ceil(tournamentsCount / take),
         },
       };
     } catch (error) {
@@ -56,7 +57,7 @@ export class TournamentsService {
 
     if (!tournament) {
       throw new NotFoundException(
-        '¡El usuario con '
+        '¡ El torneo con '
          + (isUUID(id) ? 'id ' : 'enlace permanente ')
          + `[${id}] no existe en la base de datos !`
       );
@@ -96,7 +97,7 @@ export class TournamentsService {
       return {
         message: '¡ Torneo creado satisfactoriamente 👍 !',
         data: newTournament
-      }
+      };
     } catch (error) {
       this.handleExceptions(error);
     }

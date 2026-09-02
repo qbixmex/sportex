@@ -10,6 +10,7 @@ import { envConfiguration } from './config/env.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     TournamentsModule,
     CommonModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],

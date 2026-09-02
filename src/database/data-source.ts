@@ -8,9 +8,6 @@ export default new DataSource({
   database: process.env.DB_NAME ?? '',
   username: process.env.DB_USER ?? '',
   password: process.env.DB_PASSWORD ?? '',
-  entities: [
-    'src/users/entities/user.entity.ts',
-    'src/tournaments/entities/tournament.entity.ts',
-  ],
+  entities: ['src/**/entities/*.entity.ts'],
   migrations: ['src/database/migrations/*.ts'],
 });
