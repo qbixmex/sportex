@@ -12,7 +12,7 @@ import { LoginUserDto, RegisterUserDto } from './dto';
 import { GetUser } from './decorators/get-user.decorator';
 import { VALID_ROLES } from './enums';
 import { Auth } from './decorators/auth.decorator';
-import { User } from '../users/entities/user.entity';
+import { User } from '../modules/users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
