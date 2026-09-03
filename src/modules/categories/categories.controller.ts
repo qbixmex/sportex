@@ -13,7 +13,7 @@ import {
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
-import { VALID_ROLES } from '../auth/enums';
+import { VALID_ROLES } from '../../auth/enums';
 import { PaginationDto } from '@/common/dto/pagination.dto';
 
 @Auth(VALID_ROLES.ADMIN)

@@ -10,7 +10,7 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
-import { Gender, GENDER } from '@/teams/enums';
+import { Gender, GENDER } from '@/modules/teams/enums';
 
 export class CreateTeamDto {
   @IsNotEmpty()

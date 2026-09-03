@@ -1,5 +1,5 @@
-import { Team } from '@/teams/entities/team.entity';
-import { Category } from '@/categories/entities/category.entity';
+import { Team } from '@/modules/teams/entities/team.entity';
+import { Category } from '@/modules/categories/entities/category.entity';
 import {
   BeforeInsert,
   BeforeUpdate,

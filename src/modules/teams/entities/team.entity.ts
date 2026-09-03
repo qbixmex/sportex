@@ -9,10 +9,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Tournament } from '@/tournaments/entities/tournament.entity';
-import { Category } from '@/categories/entities/category.entity';
-import { Player } from '@/players/entities/player.entity';
-import { Gender, GENDER } from '@/teams/enums';
+import { Tournament } from '@/modules/tournaments/entities/tournament.entity';
+import { Category } from '@/modules/categories/entities/category.entity';
+import { Player } from '@/modules/players/entities/player.entity';
+import { Gender, GENDER } from '@/modules/teams/enums';
 
 @Entity({ name: 'teams' })
 @Index(['permalink', 'format'])

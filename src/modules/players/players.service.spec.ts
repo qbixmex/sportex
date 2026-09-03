@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { Player } from './entities/player.entity';
-import { Team } from '@/teams/entities/team.entity';
+import { Team } from '@/modules/teams/entities/team.entity';
 import { CommonService } from '@/common/common.service';
 
 describe('PlayersService', () => {

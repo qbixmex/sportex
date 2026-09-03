@@ -7,9 +7,9 @@ import { Repository } from 'typeorm';
 import { CreateTournamentDto, UpdateTournamentDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tournament } from './entities/tournament.entity';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { validate as isUUID } from 'uuid';
-import { CommonService } from '../common/common.service';
+import { CommonService } from '../../common/common.service';
 
 @Injectable()
 export class TournamentsService {
