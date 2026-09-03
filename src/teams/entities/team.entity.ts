@@ -5,11 +5,13 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Tournament } from '@/tournaments/entities/tournament.entity';
 import { Category } from '@/categories/entities/category.entity';
+import { Player } from '@/players/entities/player.entity';
 import { Gender, GENDER } from '@/teams/enums';
 
 @Entity({ name: 'teams' })
@@ -124,4 +126,10 @@ export class Team {
   })
   @JoinColumn({ name: 'category_id' })
   category?: Category;
+
+  @OneToMany(() => Player, (player) => player.team)
+  players!: Player[];
+
+  @Column({ select: false, insert: false, update: false, nullable: true })
+  playersCount?: number;
 }
