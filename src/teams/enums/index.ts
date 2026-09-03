@@ -1,0 +1,1 @@
+export { type Gender, GENDER } from './gender.enum';
