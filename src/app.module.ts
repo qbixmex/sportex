@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { TeamsModule } from './modules/teams/teams.module';
 import { PlayersModule } from './modules/players/players.module';
+import { CoachesModule } from './modules/coaches/coaches.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PlayersModule } from './modules/players/players.module';
     CategoriesModule,
     TeamsModule,
     PlayersModule,
+    CoachesModule,
   ],
   controllers: [],
   providers: [],
