@@ -13,9 +13,9 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
-import { Auth } from '../auth/decorators/auth.decorator';
-import { VALID_ROLES } from '../auth/enums';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { Auth } from '../../auth/decorators/auth.decorator';
+import { VALID_ROLES } from '../../auth/enums';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 
 @Controller('users')
 @Auth(VALID_ROLES.ADMIN)

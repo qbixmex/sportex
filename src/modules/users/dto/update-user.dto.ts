@@ -1,7 +1,7 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { CreateUserDto } from "./create-user.dto";
 import { IsArray, IsBoolean, IsEnum, IsOptional } from "class-validator";
-import { VALID_ROLES } from "../../auth/enums";
+import { VALID_ROLES } from "../../../auth/enums";
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsBoolean()

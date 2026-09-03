@@ -1,18 +1,18 @@
 import { join } from 'node:path';
 import { ConfigModule } from '@nestjs/config';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersModule } from './users/user.module';
+import { UsersModule } from './modules/users/user.module';
 import { ApiKeyMiddleware } from './middleware/api-key.middleware';
-import { UserController } from './users/user.controller';
+import { UserController } from './modules/users/user.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TournamentsModule } from './tournaments/tournaments.module';
+import { TournamentsModule } from './modules/tournaments/tournaments.module';
 import { envConfiguration } from './config/env.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
-import { CategoriesModule } from './categories/categories.module';
-import { TeamsModule } from './teams/teams.module';
-import { PlayersModule } from './players/players.module';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { TeamsModule } from './modules/teams/teams.module';
+import { PlayersModule } from './modules/players/players.module';
 
 @Module({
   imports: [
