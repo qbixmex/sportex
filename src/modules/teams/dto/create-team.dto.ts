@@ -73,9 +73,16 @@ export class CreateTeamDto {
   @IsUUID()
   categoryId?: string | null;
 
+  @ValidateIf((o) => o.coachId !== null && o.coachId !== undefined)
+  @IsUUID()
+  coachId?: string | null;
+
   @IsEmpty()
   tournament?: never;
 
   @IsEmpty()
   category?: never;
+
+  @IsEmpty()
+  coach?: never;
 }

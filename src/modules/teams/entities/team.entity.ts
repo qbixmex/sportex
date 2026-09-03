@@ -12,6 +12,7 @@ import {
 import { Tournament } from '@/modules/tournaments/entities/tournament.entity';
 import { Category } from '@/modules/categories/entities/category.entity';
 import { Player } from '@/modules/players/entities/player.entity';
+import { Coach } from '@/modules/coaches/entities/coach.entity';
 import { Gender, GENDER } from '@/modules/teams/enums';
 
 @Entity({ name: 'teams' })
@@ -126,6 +127,12 @@ export class Team {
   })
   @JoinColumn({ name: 'category_id' })
   category?: Category;
+
+  @ManyToOne(() => Coach, (coach) => coach.teams, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'coach_id' })
+  coach?: Coach | null;
 
   @OneToMany(() => Player, (player) => player.team)
   players!: Player[];
