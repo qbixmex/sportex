@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  OneToMany,
 } from "typeorm";
 import { Tournament } from "@/tournaments/entities/tournament.entity";
+import { Team } from "@/teams/entities/team.entity";
 
 @Entity({ name: 'categories' })
 export class Category {
@@ -40,4 +42,7 @@ export class Category {
   // Relationships
   @ManyToMany(() => Tournament, (tournament) => tournament.categories)
   tournaments!: Tournament[];
+
+  @OneToMany(() => Team, (team) => team.category)
+  teams!: Team[];
 }

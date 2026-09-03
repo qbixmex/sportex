@@ -1,3 +1,4 @@
+import { Team } from '@/teams/entities/team.entity';
 import { Category } from '@/categories/entities/category.entity';
 import {
   BeforeInsert,
@@ -7,6 +8,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
@@ -125,6 +127,9 @@ export class Tournament {
     inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
   })
   categories!: Category[];
+
+  @OneToMany(() => Team, (team) => team.tournament)
+  teams!: Team[];
 
   @BeforeInsert()
   transformPermalinkInsert() {

@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { CategoriesModule } from './categories/categories.module';
     TournamentsModule,
     CommonModule,
     CategoriesModule,
+    TeamsModule,
   ],
   controllers: [],
   providers: [],
