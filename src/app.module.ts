@@ -12,6 +12,7 @@ import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { TeamsModule } from './teams/teams.module';
+import { PlayersModule } from './players/players.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { TeamsModule } from './teams/teams.module';
     CommonModule,
     CategoriesModule,
     TeamsModule,
+    PlayersModule,
   ],
   controllers: [],
   providers: [],

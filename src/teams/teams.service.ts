@@ -9,6 +9,7 @@ import { CreateTeamDto, UpdateTeamDto } from './dto';
 import { Team } from './entities/team.entity';
 import { Tournament } from '@/tournaments/entities/tournament.entity';
 import { Category } from '@/categories/entities/category.entity';
+import { Player } from '@/players/entities/player.entity';
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import { CommonService } from '@/common/common.service';
 import { isUUID } from 'class-validator';
@@ -32,11 +33,20 @@ export class TeamsService {
     try {
       const [teamsCount, teams] = await Promise.all([
         this.teamRepository.count(),
-        this.teamRepository.find({
-          take,
-          skip: (page - 1) * take,
-          relations: { tournament: true },
-        }),
+        this.teamRepository
+          .createQueryBuilder('team')
+          .leftJoinAndSelect('team.tournament', 'tournament')
+          .addSelect((subQuery) =>
+            subQuery
+              .select('COUNT(*)', 'count')
+              .from(Player, 'player')
+              .where('player.team_id = team.id'),
+            'team_playersCount',
+          )
+          .take(take)
+          .skip((page - 1) * take)
+          .orderBy('team.createdAt', 'DESC')
+          .getMany(),
       ]);
 
       return {
@@ -56,6 +66,7 @@ export class TeamsService {
       .createQueryBuilder('team')
       .leftJoin('team.tournament', 'tournament')
       .leftJoin('team.category', 'category')
+      .leftJoin('team.players', 'player')
       .addSelect([
         'tournament.id',
         'tournament.name',
@@ -63,6 +74,8 @@ export class TeamsService {
         'category.id',
         'category.name',
         'category.permalink',
+        'player.id',
+        'player.name',
       ]);
 
     if (isUUID(id)) {
