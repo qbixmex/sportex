@@ -13,6 +13,7 @@ import { Tournament } from '@/modules/tournaments/entities/tournament.entity';
 import { Category } from '@/modules/categories/entities/category.entity';
 import { Player } from '@/modules/players/entities/player.entity';
 import { Coach } from '@/modules/coaches/entities/coach.entity';
+import { FieldTeam } from '@/modules/fields/entities/field-team.entity';
 import { Gender, GENDER } from '@/modules/teams/enums';
 
 @Entity({ name: 'teams' })
@@ -136,6 +137,9 @@ export class Team {
 
   @OneToMany(() => Player, (player) => player.team)
   players!: Player[];
+
+  @OneToMany(() => FieldTeam, (fieldTeam) => fieldTeam.team)
+  fieldTeams!: FieldTeam[];
 
   @Column({ select: false, insert: false, update: false, nullable: true })
   playersCount?: number;
