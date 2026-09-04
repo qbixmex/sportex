@@ -35,7 +35,12 @@ export class TeamsService {
         this.teamRepository.count(),
         this.teamRepository
           .createQueryBuilder('team')
-          .leftJoinAndSelect('team.tournament', 'tournament')
+          .leftJoin('team.tournament', 'tournament')
+          .addSelect([
+            'tournament.id',
+            'tournament.name',
+            'tournament.permalink',
+          ])
           .addSelect((subQuery) =>
             subQuery
               .select('COUNT(*)', 'count')
