@@ -19,9 +19,6 @@ import { PlayersModule } from './modules/players/players.module.js';
 import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
 import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
 
-// Controllers
-import { UserController } from './modules/users/user.controller.js';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,6 +31,7 @@ import { UserController } from './modules/users/user.controller.js';
       autoLoadEntities: true,
       synchronize: false,
       logging: false, // for debugging sql sentences
+      ssl: false,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(import.meta.dirname, '..', 'public'),
