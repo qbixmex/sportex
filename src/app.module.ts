@@ -34,7 +34,7 @@ import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
       ssl: false,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(import.meta.dirname, '..', 'public'),
+      rootPath: join(process.cwd(), '..', 'public'),
     }),
     CommonModule,
     AuthModule,
