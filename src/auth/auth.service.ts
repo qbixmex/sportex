@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../modules/users/entities/user.entity';
@@ -86,7 +86,7 @@ export class AuthService {
     };
   }
 
-  async checkStatus(user: User) {
+  checkStatus(user: User) {
     return {
       ...user,
       token: this.getJwtToken({ id: user.id }),

@@ -17,6 +17,9 @@ import { CoachesModule } from './modules/coaches/coaches.module';
 import { FieldsModule } from './modules/fields/fields.module';
 import { SponsorsModule } from './modules/sponsors/sponsors.module';
 import { AnnouncementsModule } from './modules/announcements/announcements.module';
+import { createObserveModule } from '@nestjs/observe';
+
+export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
 @Module({
   imports: [
