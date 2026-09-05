@@ -3,39 +3,64 @@
 ## Project setup
 
 ```bash
-> bun install
+bun install
 ```
 
 ## Compile and run the project
 
+**Development**
+
 ```bash
-# development
-> bun start
+bun start
+```
 
-# watch mode
-> bun start:dev
+**Watch Mode**
 
-# production mode
-> bun start:prod
+```bash
+bun start:dev
+```
+
+**Production Mode**
+
+```bash
+bun start:prod
+```
+
+## Linting
+
+```bash
+bun lint
+```
+
+## Check typescript errors
+
+```bash
+$ bun type:check
 ```
 
 ## Run tests
 
+**Running Tests**
+
 ```bash
-# unit tests
-$ bun test
+bun test
+```
 
-# e2e tests
-$ bun run test:e2e
+**E2E Tests**
 
-# test coverage
-$ bun run test:cov
+```bash
+bun run test:e2e
+```
+
+**Test Coverage**
+```bash
+bun run test:cov
 ```
 
 ## Deployment
 
 ```bash
-$ npm install -g @nestjs/mau
+$ bun install -g @nestjs/mau
 $ mau deploy
 ```
 
@@ -48,12 +73,24 @@ docker compose -p sportex up -d
 # -d detach mode
 ```
 
-**Create your migrations:**
+## Database Migrations
+
+**Generate new migration:**
 
 ```bash
-npx prisma migrate dev --name init
+bun migration:generate --name create_"placeholder"_table
+```
 
-# --name migration_name
+**Run migration:**
+
+```bash
+bun migration:run
+```
+
+**Rollback migration:**
+
+```bash
+bun migration:revert
 ```
 
 ## Generate Auth Secret Key
