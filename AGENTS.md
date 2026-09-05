@@ -48,7 +48,7 @@ Uses the OpenSpec workflow (`schema: spec-driven`) for spec-first development.
 - Work the cycle via the installed skills in `.agents/skills/openspec-*` (`openspec-propose` → `openspec-apply-change` → `openspec-sync-specs` → `openspec-archive-change`). There are no `/opsx:*` slash commands in opencode.
 - Useful CLI: `openspec new change "<name>"`, `openspec status`, `openspec validate`, `openspec instructions <artifact> --change "<name>"`.
 - `openspec/` (and `.agents/skills/`) must be versioned — they are the source of truth.
-- Project context for generated artifacts lives in `openspec/config.yaml` (`context:` field); update it with the AGENTS.md above.
+- Project context for generated artifacts lives in `openspec/config.yaml` (`context:` field). Keep it in **business language** (see the rules there) — do NOT copy the technical content of this AGENTS.md into it.
 
 ## Architecture
 
@@ -63,5 +63,5 @@ Uses the OpenSpec workflow (`schema: spec-driven`) for spec-first development.
 ## Conventions & gotchas
 
 - Controllers use `ParseUUIDPipe` on all `:id` params (ids are UUIDs).
-- Migrations use timestamped files (not incremental numbering) created via the generate script.
+- Migrations use timestamped files (not incremental numbering) created via the generate script, named `create_<table>_table` with the table name in plural (e.g. `create_players_table`, `create_sponsors_table`, `create_announcements_table`; join tables use the singular join-table name: `create_category_tournament_table`).
 - `bun test` fails to start without a reachable Postgres for anything touching TypeORM; DB connection errors are common when `.env` is missing.
