@@ -15,4 +15,4 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 4000);
   console.log('4. LISTENING');
 }
-await bootstrap();
+bootstrap();
