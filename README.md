@@ -10,13 +10,13 @@
 
 ```bash
 # development
-> npm run start
+> bun start
 
 # watch mode
-> npm run start:dev
+> bun start:dev
 
 # production mode
-> npm run start:prod
+> bun start:prod
 ```
 
 ## Run tests
@@ -54,20 +54,6 @@ docker compose -p sportex up -d
 npx prisma migrate dev --name init
 
 # --name migration_name
-```
-
-**Prisma Client:**
-
-```bash
-npx prisma generate
-```
-
-## Prisma Studio
-
-**You can check your database in the browser**
-
-```bash
-npx prisma studio
 ```
 
 ## Generate Auth Secret Key
