@@ -1,1 +1,1 @@
-export { type Gender, GENDER } from './gender.enum';
+export { type Gender, GENDER } from './gender.enum.js';

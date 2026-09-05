@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SponsorsController } from './sponsors.controller';
-import { SponsorsService } from './sponsors.service';
-import { AuthModule } from '@/auth/auth.module';
-import { Sponsor } from './entities/sponsor.entity';
-import { CommonModule } from '@/common/common.module';
+import { SponsorsController } from './sponsors.controller.js';
+import { SponsorsService } from './sponsors.service.js';
+import { AuthModule } from '#/modules/auth/auth.module.js';
+import { Sponsor } from './entities/sponsor.entity.js';
+import { CommonModule } from '#/modules/common/common.module.js';
 
 @Module({
   controllers: [SponsorsController],

@@ -1,25 +1,26 @@
 import { join } from 'node:path';
-import { ConfigModule } from '@nestjs/config';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersModule } from './modules/users/user.module';
-import { ApiKeyMiddleware } from './middleware/api-key.middleware';
-import { UserController } from './modules/users/user.controller';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { TournamentsModule } from './modules/tournaments/tournaments.module';
-import { envConfiguration } from './config/env.config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommonModule } from './common/common.module';
-import { AuthModule } from './auth/auth.module';
-import { CategoriesModule } from './modules/categories/categories.module';
-import { TeamsModule } from './modules/teams/teams.module';
-import { PlayersModule } from './modules/players/players.module';
-import { CoachesModule } from './modules/coaches/coaches.module';
-import { FieldsModule } from './modules/fields/fields.module';
-import { SponsorsModule } from './modules/sponsors/sponsors.module';
-import { AnnouncementsModule } from './modules/announcements/announcements.module';
-import { createObserveModule } from '@nestjs/observe';
+import { ApiKeyMiddleware } from './middleware/api-key.middleware.js';
+import { envConfiguration } from './config/env.config.js';
 
-export const { ObserveModule, ObserveInstrument } = createObserveModule();
+// Modules
+import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommonModule } from './modules/common/common.module.js';
+import { AuthModule } from './modules/auth/auth.module.js';
+import { UsersModule } from './modules/users/user.module.js';
+import { TournamentsModule } from './modules/tournaments/tournaments.module.js';
+import { CategoriesModule } from './modules/categories/categories.module.js';
+import { CoachesModule } from './modules/coaches/coaches.module.js';
+import { TeamsModule } from './modules/teams/teams.module.js';
+import { FieldsModule } from './modules/fields/fields.module.js';
+import { PlayersModule } from './modules/players/players.module.js';
+import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
+import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
+
+// Controllers
+import { UserController } from './modules/users/user.controller.js';
 
 @Module({
   imports: [
@@ -37,14 +38,14 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       logging: false, // for debugging sql sentences
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(import.meta.dirname, '..', 'public'),
     }),
-    UsersModule,
-    AuthModule,
-    TournamentsModule,
     CommonModule,
-    CategoriesModule,
+    AuthModule,
+    UsersModule,
     TeamsModule,
+    TournamentsModule,
+    CategoriesModule,
     PlayersModule,
     CoachesModule,
     FieldsModule,
@@ -54,8 +55,4 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ApiKeyMiddleware).forRoutes(UserController);
-  }
-}
+export class AppModule {}

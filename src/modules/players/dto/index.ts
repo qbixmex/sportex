@@ -1,2 +1,2 @@
-export { CreatePlayerDto } from './create-player.dto';
-export { UpdatePlayerDto } from './update-player.dto';
+export { CreatePlayerDto } from './create-player.dto.js';
+export { UpdatePlayerDto } from './update-player.dto.js';

@@ -10,12 +10,12 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
-import { Auth } from '@/auth/decorators/auth.decorator';
-import { VALID_ROLES } from '@/auth/enums';
-import { PaginationDto } from '@/common/dto/pagination.dto';
-import { AnnouncementsService } from './announcements.service';
-import { CreateAnnouncementDto } from './dto/create-announcement.dto';
-import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
+import { Auth } from '#/modules/auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '#/modules/auth/enums/index.js';
+import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
+import { AnnouncementsService } from './announcements.service.js';
+import { CreateAnnouncementDto } from './dto/create-announcement.dto.js';
+import { UpdateAnnouncementDto } from './dto/update-announcement.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
 @Controller('announcements')

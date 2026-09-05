@@ -10,7 +10,7 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
-import { Gender, GENDER } from '@/modules/teams/enums';
+import { type Gender, GENDER } from '#/modules/teams/enums/index.js';
 
 export class CreateTeamDto {
   @IsNotEmpty({ message: '¡ El nombre es obligatorio !' })

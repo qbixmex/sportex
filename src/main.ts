@@ -1,12 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule, ObserveInstrument } from './app.module';
-import { TransformInterceptor } from './utils/transform.interceptor';
+import { AppModule } from './app.module.js';
+import { TransformInterceptor } from './utils/transform.interceptor.js';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    instrument: ObserveInstrument,
-  });
+  const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api');
   app.enableVersioning({ type: VersioningType.URI });

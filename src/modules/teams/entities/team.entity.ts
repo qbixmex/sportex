@@ -1,3 +1,4 @@
+import type { Relation } from 'typeorm';
 import {
   Column,
   CreateDateColumn,
@@ -9,12 +10,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Tournament } from '@/modules/tournaments/entities/tournament.entity';
-import { Category } from '@/modules/categories/entities/category.entity';
-import { Player } from '@/modules/players/entities/player.entity';
-import { Coach } from '@/modules/coaches/entities/coach.entity';
-import { FieldTeam } from '@/modules/fields/entities/field-team.entity';
-import { Gender, GENDER } from '@/modules/teams/enums';
+import { Tournament } from '#/modules/tournaments/entities/tournament.entity.js';
+import { Category } from '#/modules/categories/entities/category.entity.js';
+import { Player } from '#/modules/players/entities/player.entity.js';
+import { Coach } from '#/modules/coaches/entities/coach.entity.js';
+import { FieldTeam } from '#/modules/fields/entities/field-team.entity.js';
+import { type Gender, GENDER } from '#/modules/teams/enums/index.js';
 
 @Entity({ name: 'teams' })
 @Index(['permalink', 'format'])
@@ -121,25 +122,25 @@ export class Team {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'tournament_id' })
-  tournament?: Tournament;
+  tournament?: Relation<Tournament>;
 
   @ManyToOne(() => Category, (category) => category.teams, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'category_id' })
-  category?: Category;
+  category?: Relation<Category>;
 
   @ManyToOne(() => Coach, (coach) => coach.teams, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'coach_id' })
-  coach?: Coach | null;
+  coach?: Relation<Coach> | null;
 
   @OneToMany(() => Player, (player) => player.team)
-  players!: Player[];
+  players!: Relation<Player>[];
 
   @OneToMany(() => FieldTeam, (fieldTeam) => fieldTeam.team)
-  fieldTeams!: FieldTeam[];
+  fieldTeams!: Relation<FieldTeam>[];
 
   @Column({ select: false, insert: false, update: false, nullable: true })
   playersCount?: number;

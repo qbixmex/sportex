@@ -10,12 +10,11 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserService } from './user.service';
-import { Auth } from '../../auth/decorators/auth.decorator';
-import { VALID_ROLES } from '../../auth/enums';
-import { PaginationDto } from '../../common/dto/pagination.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/index.js';
+import { UserService } from './user.service.js';
+import { Auth } from '#/modules/auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '#/modules/auth/enums/index.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Controller('users')
 @Auth(VALID_ROLES.ADMIN)

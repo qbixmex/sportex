@@ -1,3 +1,4 @@
+import type { Relation } from "typeorm";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,8 +8,8 @@ import {
   ManyToMany,
   OneToMany,
 } from "typeorm";
-import { Tournament } from "@/modules/tournaments/entities/tournament.entity";
-import { Team } from "@/modules/teams/entities/team.entity";
+import { Tournament } from "#/modules/tournaments/entities/tournament.entity.js";
+import { Team } from "#/modules/teams/entities/team.entity.js";
 
 @Entity({ name: 'categories' })
 export class Category {
@@ -41,8 +42,8 @@ export class Category {
 
   // Relationships
   @ManyToMany(() => Tournament, (tournament) => tournament.categories)
-  tournaments!: Tournament[];
+  tournaments!: Relation<Tournament>[];
 
   @OneToMany(() => Team, (team) => team.category)
-  teams!: Team[];
+  teams!: Relation<Team>[];
 }

@@ -1,5 +1,4 @@
-import { Team } from '@/modules/teams/entities/team.entity';
-import { Category } from '@/modules/categories/entities/category.entity';
+import type { Relation } from "typeorm";
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -12,6 +11,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
+import { Category } from '#/modules/categories/entities/category.entity.js';
+import { Team } from '#/modules/teams/entities/team.entity.js';
 
 @Entity({ name: 'tournaments' })
 export class Tournament {
@@ -126,10 +127,10 @@ export class Tournament {
     joinColumn: { name: 'tournament_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
   })
-  categories!: Category[];
+  categories!: Relation<Category>[];
 
   @OneToMany(() => Team, (team) => team.tournament)
-  teams!: Team[];
+  teams!: Relation<Team>[];
 
   @BeforeInsert()
   transformPermalinkInsert() {

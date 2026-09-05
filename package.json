@@ -1,9 +1,14 @@
 {
   "name": "Sportex",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Sports platform management system",
   "author": "Daniel González Briseño",
+  "private": true,
   "license": "UNLICENSED",
+  "type": "module",
+  "imports": {
+    "#/*": "./dist/*"
+  },
   "scripts": {
     "build": "nest build",
     "deploy": "nest deploy",
@@ -61,6 +66,7 @@
     "vitest": "^4.1.2",
     "@types/passport-jwt": "^4.0.1",
     "@types/pg": "^8.23.1",
+    "ts-node": "10.9.2",
     "tsconfig-paths": "^4.2.0"
   }
 }

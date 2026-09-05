@@ -7,12 +7,12 @@ import {
   Post,
   Version,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LoginUserDto, RegisterUserDto } from './dto';
-import { GetUser } from './decorators/get-user.decorator';
-import { VALID_ROLES } from './enums';
-import { Auth } from './decorators/auth.decorator';
-import { User } from '../modules/users/entities/user.entity';
+import { AuthService } from './auth.service.js';
+import { LoginUserDto, RegisterUserDto } from './dto/index.js';
+import { GetUser } from './decorators/get-user.decorator.js';
+import { VALID_ROLES } from './enums/index.js';
+import { Auth } from './decorators/auth.decorator.js';
+import { User } from '#/modules/users/entities/user.entity.js';
 
 @Controller('auth')
 export class AuthController {

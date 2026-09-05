@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { FieldsService } from './fields.service';
-import { FieldsController } from './fields.controller';
+import { FieldsService } from './fields.service.js';
+import { FieldsController } from './fields.controller.js';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Field } from './entities/field.entity';
-import { FieldTeam } from './entities/field-team.entity';
-import { AuthModule } from '@/auth/auth.module';
-import { CommonModule } from '@/common/common.module';
+import { Field } from './entities/field.entity.js';
+import { FieldTeam } from './entities/field-team.entity.js';
+import { AuthModule } from '#/modules/auth/auth.module.js';
+import { CommonModule } from '#/modules/common/common.module.js';
 
 @Module({
   controllers: [FieldsController],

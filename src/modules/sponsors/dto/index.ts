@@ -1,2 +1,2 @@
-export * from './create-sponsor.dto';
-export * from './update-sponsor.dto';
+export * from './create-sponsor.dto.js';
+export * from './update-sponsor.dto.js';

@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CommonService } from '@/common/common.service';
+import { CommonService } from '#/modules/common/common.service.js';
 import { ConflictException, NotFoundException } from '@nestjs/common';
-import { Sponsor } from './entities/sponsor.entity';
-import { CreateSponsorDto } from './dto/create-sponsor.dto';
-import { UpdateSponsorDto } from './dto/update-sponsor.dto';
-import { PaginationDto } from '@/common/dto/pagination.dto';
+import { Sponsor } from './entities/sponsor.entity.js';
+import { CreateSponsorDto } from './dto/create-sponsor.dto.js';
+import { UpdateSponsorDto } from './dto/update-sponsor.dto.js';
+import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
 
 export class SponsorsService {
   constructor(

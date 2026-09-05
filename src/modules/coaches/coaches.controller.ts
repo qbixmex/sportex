@@ -10,12 +10,11 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
-import { CoachesService } from './coaches.service';
-import { CreateCoachDto } from './dto/create-coach.dto';
-import { UpdateCoachDto } from './dto/update-coach.dto';
-import { PaginationDto } from '@/common/dto/pagination.dto';
-import { Auth } from '@/auth/decorators/auth.decorator';
-import { VALID_ROLES } from '@/auth/enums';
+import { CoachesService } from './coaches.service.js';
+import { CreateCoachDto, UpdateCoachDto } from './dto/index.js';
+import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
+import { Auth } from '#/modules/auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '#/modules/auth/enums/index.js';
 
 @Auth(VALID_ROLES.ADMIN)
 @Controller('coaches')

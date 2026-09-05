@@ -1,11 +1,12 @@
+import type { Relation } from 'typeorm';
 import {
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { Field } from './field.entity';
-import { Team } from '@/modules/teams/entities/team.entity';
+import { Field } from './field.entity.js';
+import { Team } from '#/modules/teams/entities/team.entity.js';
 
 @Entity({ name: 'field_team' })
 export class FieldTeam {
@@ -19,11 +20,11 @@ export class FieldTeam {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'field_id' })
-  field!: Field;
+  field!: Relation<Field>;
 
   @ManyToOne(() => Team, (team) => team.fieldTeams, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'team_id' })
-  team!: Team;
+  team!: Relation<Team>;
 }

@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateFieldDto, UpdateFieldDto } from './dto';
-import { Field } from './entities/field.entity';
-import { FieldTeam } from './entities/field-team.entity';
+import { CreateFieldDto, UpdateFieldDto } from './dto/index.js';
+import { Field } from './entities/field.entity.js';
+import { FieldTeam } from './entities/field-team.entity.js';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationDto } from '@/common/dto/pagination.dto';
+import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
 import { isUUID } from 'class-validator';
-import { CommonService } from '@/common/common.service';
+import { CommonService } from '#/modules/common/common.service.js';
 
 @Injectable()
 export class FieldsService {

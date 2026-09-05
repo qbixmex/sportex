@@ -1,2 +1,2 @@
-export { CreateCoachDto } from './create-coach.dto';
-export { UpdateCoachDto } from './update-coach.dto';
+export { CreateCoachDto } from './create-coach.dto.js';
+export { UpdateCoachDto } from './update-coach.dto.js';
