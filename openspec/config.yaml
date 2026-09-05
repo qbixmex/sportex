@@ -3,23 +3,30 @@ schema: spec-driven
 # Project context (optional)
 # This is shown to AI when creating artifacts.
 # Add your tech stack, conventions, style guides, domain knowledge, etc.
+# NOTE: keep this in BUSINESS language. This context is injected into every
+# artifact (proposal, specs, design, tasks); technical details (stack, routing,
+# entities, path aliases, tests) live in AGENTS.md and are read separately.
 context: |
-  Tech stack: NestJS 12, TypeORM, PostgreSQL 16, Bun (package manager)
-  Routing: global prefix `api` + URI versioning -> real paths /api/v1/...
-  Auth: JWT via @Auth(role) decorator + guards in src/auth/; only UserController gated by ApiKeyMiddleware
-  Entities: src/**/entities/*.entity.ts; schema via TypeORM migrations (synchronize: false)
-  Path aliases: @/* -> src/*, ~/* -> repo root
-  Tests: jest, rootDir=src (*.spec.ts); e2e in test/ requires running DB
+  SportEx es una plataforma deportiva que gestiona torneos, categorías, equipos,
+  jugadores, entrenadores, canchas y patrocinadores.
+  Los artefactos proposal y specs se escriben SOLO en lenguaje de negocio y en
+  español: sin campos/columnas, sin librerías/frameworks, sin rutas ni paths.
+  Lo técnico vive en design.md y tasks.md (ver reglas por artefacto y AGENTS.md).
 
 # Per-artifact rules (optional)
 # Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+rules:
+  proposal:
+    - Write in business domain language: no code, no frameworks, no libraries, no field/column names, no file paths, no API routes.
+    - Specify only what changes for the business (capabilities, roles, data the business exposes) and its rules.
+  specs:
+    - Write in business vocabulary, not implementation vocabulary: use "título", "nombre", "correo electrónico", "identificador", "enlace permanente", "estado activo/inactivo", "fecha de inicio", "fecha de fin", "imagen", "cantidad de jugadores", etc.
+    - Never use field/column identifiers (teamId, imageUrl, active, permalink, playersCount, FieldTeam, etc.), framework names, or storage details. Implementation details belong in design.md and tasks.md.
+    - A spec is a behavior contract: if the implementation can change without changing externally visible behavior, it does not belong in the spec.
+  design:
+    - This is the technical document: entities, columns, endpoints, migrations, libraries and framework choices belong here.
+  tasks:
+    - File paths, commands, libraries and implementation steps belong here.
 
 # Per-operation guidance (optional)
 # Add advisory guidance for how apply and archive work should be conducted.

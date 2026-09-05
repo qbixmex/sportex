@@ -1,89 +1,89 @@
 ## Purpose
 
-Permite gestionar patrocinadores (sponsors) dentro de la plataforma: crear, consultar, actualizar y eliminar sponsors, con nombre único y campos opcionales, restringido únicamente a usuarios con rol administrador.
+Permite gestionar patrocinadores dentro de la plataforma: registrar, consultar, modificar y eliminar patrocinadores, con nombre único y datos opcionales, restringido únicamente a usuarios con rol administrador.
 
 ## ADDED Requirements
 
-### Requirement: Crear sponsor
+### Requirement: Crear patrocinador
 
-El sistema SHALL permitir crear un sponsor con un nombre único. El nombre SHALL no repetirse en el sistema. El sponsor MAY incluir url, imageUrl, imagePublicId, startDate, endDate, position (por defecto 0), clicks (por defecto 0) y active (por defecto false) como campos opcionales, y MAY existir sin ellos.
+El sistema SHALL permitir crear un patrocinador con un nombre único. El nombre SHALL no repetirse en el sistema. El patrocinador MAY incluir enlace web, imagen, fecha de inicio, fecha de fin, posición (por defecto 0), cantidad de clics (por defecto 0) y estado activo/inactivo (inactivo por defecto) como datos opcionales, y MAY existir sin ellos.
 
-#### Scenario: Crear sponsor válido
-- **WHEN** se envía una solicitud de creación con un nombre válido y sin campos opcionales
-- **THEN** el sistema crea el sponsor con el nombre indicado, position en 0, clicks en 0 y active en false por defecto
+#### Scenario: Crear patrocinador válido
+- **WHEN** se envía una solicitud de creación con un nombre válido y sin datos opcionales
+- **THEN** el sistema crea el patrocinador con el nombre indicado, posición en 0, cantidad de clics en 0 e inactivo por defecto
 
-#### Scenario: Crear sponsor con nombre duplicado
-- **WHEN** se intenta crear un sponsor cuyo nombre ya está registrado en otro sponsor
+#### Scenario: Crear patrocinador con nombre duplicado
+- **WHEN** se intenta crear un patrocinador cuyo nombre ya está registrado en otro patrocinador
 - **THEN** el sistema rechaza la creación y devuelve un error de conflicto
 
-#### Scenario: Crear sponsor con campos opcionales
-- **WHEN** se envía una solicitud de creación con nombre, url, imageUrl, imagePublicId, startDate, endDate, position, clicks y active
-- **THEN** el sistema crea el sponsor con todos los valores indicados
+#### Scenario: Crear patrocinador con datos opcionales
+- **WHEN** se envía una solicitud de creación con nombre, enlace web, imagen, fecha de inicio, fecha de fin, posición, cantidad de clics y estado activo/inactivo
+- **THEN** el sistema crea el patrocinador con todos los valores indicados
 
-#### Scenario: Crear sponsor sin nombre
+#### Scenario: Crear patrocinador sin nombre
 - **WHEN** se envía una solicitud de creación sin nombre
 - **THEN** el sistema rechaza la creación y devuelve un error de validación
 
 ### Requirement: Acceso restringido a administradores
 
-El sistema SHALL permitir gestionar sponsors (crear, consultar, actualizar y eliminar) únicamente a usuarios con rol administrador. Los usuarios sin rol administrador SHALL NOT poder ejecutar estas operaciones.
+El sistema SHALL permitir gestionar patrocinadores (crear, consultar, actualizar y eliminar) únicamente a usuarios con rol administrador. Los usuarios sin rol administrador SHALL NOT poder ejecutar estas operaciones.
 
-#### Scenario: Usuario administrador gestiona sponsors
-- **WHEN** un usuario con rol administrador solicita crear, consultar, actualizar o eliminar un sponsor
+#### Scenario: Usuario administrador gestiona patrocinadores
+- **WHEN** un usuario con rol administrador solicita crear, consultar, actualizar o eliminar un patrocinador
 - **THEN** el sistema permite la operación
 
-#### Scenario: Usuario sin rol administrador intenta gestionar sponsors
-- **WHEN** un usuario sin rol administrador solicita crear, consultar, actualizar o eliminar un sponsor
+#### Scenario: Usuario sin rol administrador intenta gestionar patrocinadores
+- **WHEN** un usuario sin rol administrador solicita crear, consultar, actualizar o eliminar un patrocinador
 - **THEN** el sistema rechaza la operación y devuelve un error de autorización
 
-### Requirement: Consultar sponsors
+### Requirement: Consultar patrocinadores
 
-El sistema SHALL permitir listar sponsors con paginación y obtener un sponsor individual por su id. El listado SHALL devolver los sponsors en páginas y el detalle SHALL incluir todos los datos del sponsor.
+El sistema SHALL permitir listar patrocinadores con paginación y obtener un patrocinador individual por su identificador. El listado SHALL devolver los patrocinadores por páginas y el detalle SHALL incluir todos los datos del patrocinador.
 
-#### Scenario: Listar sponsors paginado
-- **WHEN** se solicita la lista de sponsors con parámetros de paginación
-- **THEN** el sistema devuelve una lista paginada de sponsors
+#### Scenario: Listar patrocinadores paginado
+- **WHEN** se solicita la lista de patrocinadores con parámetros de paginación
+- **THEN** el sistema devuelve una lista paginada de patrocinadores
 
-#### Scenario: Obtener un sponsor por id
-- **WHEN** se solicita un sponsor cuyo id existe
-- **THEN** el sistema devuelve todos los datos de ese sponsor
+#### Scenario: Obtener un patrocinador por identificador
+- **WHEN** se solicita un patrocinador cuyo identificador existe
+- **THEN** el sistema devuelve todos los datos de ese patrocinador
 
-#### Scenario: Obtener un sponsor inexistente
-- **WHEN** se solicita un sponsor cuyo id no existe
+#### Scenario: Obtener un patrocinador inexistente
+- **WHEN** se solicita un patrocinador cuyo identificador no existe
 - **THEN** el sistema devuelve un error de no encontrado
 
-### Requirement: Actualizar sponsor
+### Requirement: Actualizar patrocinador
 
-El sistema SHALL permitir modificar los datos de un sponsor existente, incluyendo su nombre, url, imageUrl, imagePublicId, startDate, endDate, position, clicks y active. El nombre SHALL permanecer único entre todos los sponsors.
+El sistema SHALL permitir modificar los datos de un patrocinador existente, incluyendo su nombre, enlace web, imagen, fecha de inicio, fecha de fin, posición, cantidad de clics y estado activo/inactivo. El nombre SHALL permanecer único entre todos los patrocinadores.
 
 #### Scenario: Actualizar nombre a un valor no usado
-- **WHEN** se actualiza el nombre de un sponsor existente a un valor válido y no usado por otro sponsor
+- **WHEN** se actualiza el nombre de un patrocinador existente a un valor válido y no usado por otro patrocinador
 - **THEN** el sistema guarda el nuevo nombre
 
 #### Scenario: Actualizar nombre a un valor ya usado
-- **WHEN** se intenta actualizar el nombre de un sponsor a un nombre ya registrado por otro sponsor
+- **WHEN** se intenta actualizar el nombre de un patrocinador a un nombre ya registrado por otro patrocinador
 - **THEN** el sistema rechaza la actualización y devuelve un error de conflicto
 
-#### Scenario: Actualizar campos opcionales de un sponsor
-- **WHEN** se actualizan campos opcionales como url, imageUrl, imagePublicId, startDate, endDate, position, clicks o active
+#### Scenario: Actualizar datos opcionales de un patrocinador
+- **WHEN** se actualizan datos opcionales como enlace web, imagen, fecha de inicio, fecha de fin, posición, cantidad de clics o estado activo/inactivo
 - **THEN** el sistema guarda los nuevos valores
 
-#### Scenario: Actualizar position y clicks de un sponsor
-- **WHEN** se actualiza position o clicks de un sponsor existente
-- **THEN** el sistema guarda los nuevos valores numéricos
+#### Scenario: Actualizar posición y cantidad de clics de un patrocinador
+- **WHEN** se actualiza la posición o la cantidad de clics de un patrocinador existente
+- **THEN** el sistema guarda los nuevos valores
 
-#### Scenario: Actualizar sponsor inexistente
-- **WHEN** se intenta actualizar un sponsor cuyo id no existe
+#### Scenario: Actualizar patrocinador inexistente
+- **WHEN** se intenta actualizar un patrocinador cuyo identificador no existe
 - **THEN** el sistema devuelve un error de no encontrado
 
-### Requirement: Eliminar sponsor
+### Requirement: Eliminar patrocinador
 
-El sistema SHALL permitir eliminar un sponsor existente por su id.
+El sistema SHALL permitir eliminar un patrocinador existente por su identificador.
 
-#### Scenario: Eliminar un sponsor existente
-- **WHEN** se elimina un sponsor cuyo id existe
-- **THEN** el sponsor se elimina y ya no aparece en el listado
+#### Scenario: Eliminar un patrocinador existente
+- **WHEN** se elimina un patrocinador cuyo identificador existe
+- **THEN** el patrocinador se elimina y ya no aparece en el listado
 
-#### Scenario: Eliminar un sponsor inexistente
-- **WHEN** se intenta eliminar un sponsor cuyo id no existe
+#### Scenario: Eliminar un patrocinador inexistente
+- **WHEN** se intenta eliminar un patrocinador cuyo identificador no existe
 - **THEN** el sistema devuelve un error de no encontrado

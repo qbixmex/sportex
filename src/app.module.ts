@@ -16,6 +16,7 @@ import { PlayersModule } from './modules/players/players.module';
 import { CoachesModule } from './modules/coaches/coaches.module';
 import { FieldsModule } from './modules/fields/fields.module';
 import { SponsorsModule } from './modules/sponsors/sponsors.module';
+import { AnnouncementsModule } from './modules/announcements/announcements.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { SponsorsModule } from './modules/sponsors/sponsors.module';
     CoachesModule,
     FieldsModule,
     SponsorsModule,
+    AnnouncementsModule,
   ],
   controllers: [],
   providers: [],
