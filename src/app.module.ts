@@ -30,14 +30,11 @@ import { UserController } from './modules/users/user.controller.js';
     TypeOrmModule.forRoot({
       type: 'postgres',
       driver: pg,
-      host: process.env.DB_HOST ?? 'localhost',
-      database: process.env.DB_NAME ?? '',
-      username: process.env.DB_USER ?? '',
-      password: process.env.DB_PASSWORD ?? '',
-      // url: process.env.DATABASE_URL ?? undefined,
+      url: process.env.DATABASE_URL ?? undefined,
       autoLoadEntities: true,
       synchronize: false,
       logging: false, // for debugging sql sentences
+      ssl: true,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(import.meta.dirname, '..', 'public'),
