@@ -34,7 +34,6 @@ import { UserController } from './modules/users/user.controller.js';
       autoLoadEntities: true,
       synchronize: false,
       logging: false, // for debugging sql sentences
-      ssl: true,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(import.meta.dirname, '..', 'public'),
