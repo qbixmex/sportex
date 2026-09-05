@@ -7,7 +7,7 @@ La plataforma gestiona equipos, torneos y categorías pero no tiene forma de ras
 - Nuevo módulo `players` con operaciones CRUD completas (crear, consultar, actualizar, eliminar)
 - Entidad Player con atributos: id, name, email, phone, birthday, nationality, imageUrl, imagePublicId, active, createdAt, updatedAt
 - Relación bidireccional: Player pertenece a un Team (FK opcional), Team tiene muchos Players
-- API REST en `/api/v1/players` siguiendo las convenciones existentes (auth, paginación, versioning)
+- API REST de `players` siguiendo las convenciones existentes (autenticación, paginación y versionado)
 
 ## Capabilities
 
@@ -17,11 +17,11 @@ La plataforma gestiona equipos, torneos y categorías pero no tiene forma de ras
 
 ### Modified Capabilities
 
-- `team-management`: Se agrega relación OneToMany con jugadores en la entidad Team
+- `team-management`: La entidad de equipo incorpora la relación con sus jugadores.
 
 ## Impact
 
-- Nuevo directorio `src/players/` (entidad, DTOs, servicio, controlador, módulo, tests)
-- Modificación de `src/teams/entities/team.entity.ts` — agregar relación `@OneToMany` hacia jugadores
-- Modificación de `src/app.module.ts` — importar `PlayersModule`
-- Nueva migración TypeORM para la tabla `players` con FK hacia `teams`
+- Nuevo módulo `players` con su API CRUD
+- Modificación del módulo `teams` — la entidad de equipo agrega la relación hacia jugadores
+- Registro del módulo `players` en la aplicación
+- Nueva migración de base de datos para la tabla `players` con FK hacia `teams`

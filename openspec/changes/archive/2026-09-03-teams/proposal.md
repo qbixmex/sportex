@@ -4,14 +4,14 @@ El sistema ya gestiona Torneos, Categorías y Usuarios, pero no existe la entida
 
 ## What Changes
 
-- Crear el módulo `teams` completo: entidad `Team`, DTOs, servicio y controlador con CRUD (`/api/v1/teams`).
-- Un `Team` pertenece a un único `Torneo` (`ManyToOne` opcional); un `Torneo` puede tener muchos `Team`s (`OneToMany` inversa).
+- Crear el módulo `teams` con CRUD completo (crear, consultar, actualizar y eliminar equipos).
+- Un `Team` puede pertenecer a un único `Torneo`; un `Torneo` puede tener muchos `Team`s.
 - El campo `tournament_id` es opcional: un equipo puede existir sin torneo asignado.
-- Un `Team` pertenece a una única `Categoría` (`ManyToOne` opcional); una `Categoría` puede tener muchos `Team`s (`OneToMany` inversa).
+- Un `Team` puede pertenecer a una única `Categoría`; una `Categoría` puede tener muchos `Team`s.
 - El campo `category_id` es opcional: un equipo puede existir sin categoría asignada.
 - `name` y `permalink` NO son únicos: un mismo nombre (p. ej. "Colegio Alemán") puede repetirse en distintas categorías y torneos.
 - No se agregan relaciones con `User` (jugadores/miembros) en este cambio — se contempla en un flujo futuro.
-- El esquema se cambia vía entidad TypeORM y los cambios se reflejan en una migración generada con `migration:generate` (no se escribe migración a mano).
+- El esquema se cambia mediante una migración de base de datos generada automáticamente (no se escribe migración a mano).
 
 ## Capabilities
 
@@ -23,7 +23,7 @@ El sistema ya gestiona Torneos, Categorías y Usuarios, pero no existe la entida
 
 ## Impact
 
-- **Nuevo código:** `src/teams/` — `entities/team.entity.ts`, `dto/create-team.dto.ts`, `dto/update-team.dto.ts`, `teams.service.ts`, `teams.controller.ts`, `teams.module.ts`.
-- **Modificación:** `src/tournaments/entities/tournament.entity.ts` — relación inversa `teams` (`OneToMany`); `src/categories/entities/category.entity.ts` — relación inversa `teams` (`OneToMany`).
-- **Migración:** tabla `teams` con FK a `tournaments.id` y a `categories.id` (ambos nullable), generada vía `bun run migration:generate`.
-- **Convenciones existentes a seguir:** `@Auth(VALID_ROLES.ADMIN)`, `@Version('1')`, `ParseUUIDPipe` en `:id`, paginación con `@/common/dto/pagination.dto`, path aliases `@/*`.
+- **Nuevo código:** módulo `teams` (entidad `Team` y su API CRUD).
+- **Modificación:** los módulos de torneos y categorías incorporan la relación inversa con los equipos.
+- **Migración:** tabla `teams` con FK a `tournaments.id` y a `categories.id` (ambos nullable), generada automáticamente.
+- **Convenciones existentes a seguir:** API versionada, endpoints protegidos con autenticación de administrador, ids UUID validados y paginación.

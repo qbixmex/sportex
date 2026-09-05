@@ -18,7 +18,7 @@ The fields (canchas) module exists but the explicit many-to-many relationship be
 
 ## Impact
 
-- `src/modules/fields/entities/field.entity.ts` — relationship to `FieldTeam`
-- `src/modules/teams/entities/team.entity.ts` — relationship to `FieldTeam`
-- `src/modules/fields/entities/field-team.entity.ts` — pivot entity
-- `src/database/migrations/` — migration for `field_team`
+- Entidad `Field` — relación con `FieldTeam`
+- Entidad `Team` — relación con `FieldTeam`
+- Entidad pivote `FieldTeam`
+- Migración existente para la tabla `field_team`
