@@ -1,24 +1,28 @@
 ## Why
 
-The fields (canchas) module exists but the explicit many-to-many relationship between Field and Team via the FieldTeam pivot table needs formal specification for association management and query behavior.
+La relación muchos a muchos entre canchas y equipos existe en la plataforma, pero su gestión de asociaciones y su comportamiento de consulta necesitan quedar formalizados: qué significa asociar, consultar, reemplazar y eliminar esas asociaciones sin afectar a las canchas ni a los equipos.
 
 ## What Changes
 
-- Formalize the `field-team` relationship capability with spec-level requirements for creating, querying (with count), managing associations with `teamsId`/`fieldsId`, and removing only pivot references (not teams/fields).
-- Define the pivot behavior: a field may have many teams, and a team may belong to many fields, managed through `FieldTeam`.
+- Formalizar la relación muchos a muchos entre canchas y equipos: una cancha puede ser utilizada por muchos equipos y un equipo puede utilizar muchas canchas.
+- Al crear una cancha se MAY indicar los equipos que la utilizarán.
+- Al actualizar una cancha o un equipo se pueden reemplazar sus asociaciones, sin eliminar los registros de los otros.
+- Al eliminar una cancha solo se eliminan sus asociaciones con equipos; los equipos permanecen.
+- Al consultar una cancha se incluyen sus equipos asociados y la cantidad total; al consultar un equipo se incluyen sus canchas asociadas.
 
 ## Capabilities
 
 ### New Capabilities
-- `field-team`: Defines the many-to-many association between fields (`fields`) and teams (`teams`) through the `field_team` pivot table, including creation, listing, and removal of associations.
+
+- `field-team`: Definición de la asociación muchos a muchos entre canchas y equipos: creación, reemplazo y eliminación de asociaciones.
 
 ### Modified Capabilities
-- `field-management`: Updated query to include team count and `permalink`; creation/update now accepts `teamsId`; delete removes only pivot refs.
-- `team-management`: Updated to allow `fieldsId` in updates; query includes associated fields with `id`, `name`, `permalink`.
+
+- `field-management`: La consulta de una cancha incluye la cantidad de equipos asociados y su enlace permanente; la creación y actualización de una cancha aceptan la asociación con equipos; eliminar una cancha solo quita sus asociaciones.
+- `team-management`: La actualización de un equipo acepta la asociación con canchas; la consulta de un equipo incluye sus canchas asociadas.
 
 ## Impact
 
-- Entidad `Field` — relación con `FieldTeam`
-- Entidad `Team` — relación con `FieldTeam`
-- Entidad pivote `FieldTeam`
-- Migración existente para la tabla `field_team`
+- La plataforma formaliza las reglas de asociación entre canchas y equipos.
+- Consultas de canchas y equipos exponen sus asociaciones y cantidades.
+- La eliminación de una cancha nunca elimina los equipos asociados.

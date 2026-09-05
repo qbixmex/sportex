@@ -1,7 +1,8 @@
 ## ADDED Requirements
 
 ### Requirement: Asociar canchas a un equipo
-El sistema SHALL permitir asociar a cada equipo una o varias canchas (`fields`) a través de la tabla pivote `FieldTeam`. Un equipo MAY tener cero o más canchas asociadas, y una cancha MAY ser utilizada por cero o más equipos. Al consultar un equipo, el sistema SHALL incluir sus canchas asociadas si las tiene, exponiendo solo el `id` y el `name` de cada cancha.
+
+El sistema SHALL permitir asociar a cada equipo una o varias canchas. Un equipo MAY tener cero o más canchas asociadas, y una cancha MAY ser utilizada por cero o más equipos. Al consultar un equipo, el sistema SHALL incluir sus canchas asociadas si las tiene, exponiendo solo el identificador y el nombre de cada cancha.
 
 #### Scenario: Crear equipo con canchas
 - **WHEN** se envía una solicitud de creación de un equipo con una o varias canchas asociadas
@@ -13,4 +14,4 @@ El sistema SHALL permitir asociar a cada equipo una o varias canchas (`fields`) 
 
 #### Scenario: Consultar equipo con sus canchas
 - **WHEN** se consulta un equipo que tiene canchas asociadas
-- **THEN** el sistema devuelve las canchas asociadas, exponiendo solo `id` y `name` de cada una
+- **THEN** el sistema devuelve las canchas asociadas, exponiendo solo el identificador y el nombre de cada una
