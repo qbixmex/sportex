@@ -10,38 +10,38 @@ import {
 } from "class-validator";
 
 export class CreateUserDto {
-  @IsString()
-  @IsEmail()
+  @IsString({ message: '¡ El email debe ser una cadena de texto !' })
+  @IsEmail({}, { message: '¡ El email debe tener un formato válido !' })
   email!: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(8)
-  @MaxLength(100)
+  @IsNotEmpty({ message: '¡ La contraseña es obligatoria !' })
+  @IsString({ message: '¡ La contraseña debe ser una cadena de texto !' })
+  @MinLength(8, { message: '¡ La contraseña debe ser igual o mayor a 8 caracteres !' })
+  @MaxLength(100, { message: '¡ La contraseña debe ser menor o igual a 100 caracteres !' })
   password!: string;
 
-  @IsString()
+  @IsString({ message: '¡ El nombre debe ser una cadena de texto !' })
   @IsOptional()
-  @MinLength(3)
+  @MinLength(3, { message: '¡ El nombre debe ser igual o mayor a 3 caracteres !' })
   name?: string;
 
-  @IsString()
+  @IsString({ message: '¡ El nombre de usuario debe ser una cadena de texto !' })
   @IsOptional()
-  @MinLength(3)
+  @MinLength(3, { message: '¡ El nombre de usuario debe ser igual o mayor a 3 caracteres !' })
   username?: string;
 
-  @IsString()
+  @IsString({ message: '¡ El url de la imagen debe ser una cadena de texto !' })
   @IsOptional()
-  @IsUrl({ protocols: ['https'] })
-  @MinLength(1)
+  @IsUrl({ protocols: ['https'] }, { message: "Los url deben comenzar con [https]" })
+  @MinLength(1, { message: '¡ El id público debe ser mínimo de 1 caracter !' })
   imageUrl?: string;
 
-  @IsString()
+  @IsString({ message: '¡ El id público de la imagen debe ser una cadena de texto !' })
   @IsOptional()
-  @MinLength(1)
+  @MinLength(1, { message: '¡ El id público debe ser mínimo de 1 caracter !' })
   imagePublicId?: string;
 
-  @IsBoolean()
+  @IsBoolean({ message: '¡ La propiedad activo debe ser del tipo boleano !' })
   @IsOptional()
   isActive?: boolean;
 }

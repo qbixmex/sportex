@@ -11,45 +11,45 @@ import {
 } from 'class-validator';
 
 export class CreateCoachDto {
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(2)
+  @IsNotEmpty({ message: '¡ El nombre es obligatorio !' })
+  @IsString({ message: '¡ El nombre debe ser una cadena de texto !' })
+  @MinLength(2, { message: '¡ El nombre debe ser igual o mayor a 2 caracteres !' })
   name!: string;
 
-  @IsNotEmpty()
-  @IsEmail()
+  @IsNotEmpty({ message: '¡ El email es obligatorio !' })
+  @IsEmail({}, { message: '¡ El email debe tener un formato válido !' })
   email!: string;
 
   @IsOptional()
-  @IsString()
+  @IsString({ message: '¡ El teléfono debe ser una cadena de texto !' })
   phone?: string;
 
   @IsOptional()
-  @IsNumber()
+  @IsNumber({}, { message: '¡ La edad debe ser un número !' })
   age?: number;
 
   @IsOptional()
-  @IsString()
+  @IsString({ message: '¡ La nacionalidad debe ser una cadena de texto !' })
   nationality?: string;
 
   @IsOptional()
-  @IsString()
+  @IsString({ message: '¡ El url de la imagen debe ser una cadena de texto !' })
   imageUrl?: string;
 
   @IsOptional()
-  @IsString()
+  @IsString({ message: '¡ El id público de la imagen debe ser una cadena de texto !' })
   imagePublicId?: string;
 
   @IsOptional()
-  @IsString()
+  @IsString({ message: '¡ La descripción debe ser una cadena de texto !' })
   description?: string;
 
   @IsOptional()
-  @IsBoolean()
+  @IsBoolean({ message: '¡ La propiedad activo debe ser del tipo boleano !' })
   active?: boolean;
 
   @IsOptional()
   @IsArray()
-  @IsUUID('all', { each: true })
+  @IsUUID('all', { each: true, message: '¡ Los identificadores de equipos deben ser UUIDs válidos !' })
   teamIds?: string[];
 }
