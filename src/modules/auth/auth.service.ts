@@ -5,8 +5,8 @@ import { Repository } from 'typeorm';
 import { compareSync, hashSync } from 'bcryptjs';
 import { RegisterUserDto, LoginUserDto } from './dto/index.js';
 import { JwtPayload } from './interfaces/jwt-payload.interface.js';
-import { CommonService } from '#/modules/common/common.service.js';
-import { User } from '#/modules/users/entities/user.entity.js';
+import { CommonService } from '../common/common.service.js';
+import { User } from '../users/entities/user.entity.js';
 
 @Injectable()
 export class AuthService {

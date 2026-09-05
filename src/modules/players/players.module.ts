@@ -4,9 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayersService } from './players.service.js';
 import { PlayersController } from './players.controller.js';
 import { Player } from './entities/player.entity.js';
-import { Team } from '#/modules/teams/entities/team.entity.js';
-import { AuthModule } from '#/modules/auth/auth.module.js';
-import { CommonModule } from '#/modules/common/common.module.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { AuthModule } from '../auth/auth.module.js';
+import { CommonModule } from '../common/common.module.js';
 
 @Module({
   controllers: [PlayersController],

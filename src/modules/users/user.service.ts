@@ -8,8 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { hashSync } from 'bcryptjs';
 import { UpdateUserDto, CreateUserDto } from './dto/index.js';
 import { User } from './entities/user.entity.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
-import { CommonService } from '#/modules/common/common.service.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 
 @Injectable()
 export class UserService {

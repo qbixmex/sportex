@@ -10,12 +10,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Tournament } from '#/modules/tournaments/entities/tournament.entity.js';
-import { Category } from '#/modules/categories/entities/category.entity.js';
-import { Player } from '#/modules/players/entities/player.entity.js';
-import { Coach } from '#/modules/coaches/entities/coach.entity.js';
-import { FieldTeam } from '#/modules/fields/entities/field-team.entity.js';
-import { type Gender, GENDER } from '#/modules/teams/enums/index.js';
+import { Tournament } from '../../tournaments/entities/tournament.entity.js';
+import { Category } from '../../categories/entities/category.entity.js';
+import { Player } from '../../players/entities/player.entity.js';
+import { Coach } from '../../coaches/entities/coach.entity.js';
+import { FieldTeam } from '../../fields/entities/field-team.entity.js';
+import { type Gender, GENDER } from '../../teams/enums/index.js';
 
 @Entity({ name: 'teams' })
 @Index(['permalink', 'format'])

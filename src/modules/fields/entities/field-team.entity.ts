@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { Field } from './field.entity.js';
-import { Team } from '#/modules/teams/entities/team.entity.js';
+import { Team } from '../../teams/entities/team.entity.js';
 
 @Entity({ name: 'field_team' })
 export class FieldTeam {

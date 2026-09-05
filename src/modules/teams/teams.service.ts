@@ -8,11 +8,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTeamDto } from './dto/index.js';
 import { UpdateTeamDto } from './dto/update-team.dto.js';
 import { Team } from './entities/team.entity.js';
-import { Tournament } from '#/modules/tournaments/entities/tournament.entity.js';
-import { Category } from '#/modules/categories/entities/category.entity.js';
-import { Player } from '#/modules/players/entities/player.entity.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
-import { CommonService } from '#/modules/common/common.service.js';
+import { Tournament } from '../tournaments/entities/tournament.entity.js';
+import { Category } from '../categories/entities/category.entity.js';
+import { Player } from '../players/entities/player.entity.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 import { isUUID } from 'class-validator';
 
 @Injectable()

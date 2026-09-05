@@ -10,9 +10,9 @@ import {
   Query,
   Version,
 } from '@nestjs/common';
-import { Auth } from '#/modules/auth/decorators/auth.decorator.js';
-import { VALID_ROLES } from '#/modules/auth/enums/index.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
+import { Auth } from '../auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '../auth/enums/index.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { AnnouncementsService } from './announcements.service.js';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto.js';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto.js';

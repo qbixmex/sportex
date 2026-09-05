@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { FieldsService } from './fields.service.js';
 import { CreateFieldDto, UpdateFieldDto } from './dto/index.js';
-import { Auth } from '#/modules/auth/decorators/auth.decorator.js';
-import { VALID_ROLES } from '#/modules/auth/enums/index.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
+import { Auth } from '../auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '../auth/enums/index.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
 @Controller('fields')

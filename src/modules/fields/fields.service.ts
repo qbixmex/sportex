@@ -4,9 +4,9 @@ import { Field } from './entities/field.entity.js';
 import { FieldTeam } from './entities/field-team.entity.js';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { isUUID } from 'class-validator';
-import { CommonService } from '#/modules/common/common.service.js';
+import { CommonService } from '../common/common.service.js';
 
 @Injectable()
 export class FieldsService {

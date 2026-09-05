@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Team } from '#/modules/teams/entities/team.entity.js';
+import { Team } from '../../teams/entities/team.entity.js';
 
 @Entity({ name: 'players' })
 export class Player {

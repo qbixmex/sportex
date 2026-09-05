@@ -7,9 +7,9 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePlayerDto, UpdatePlayerDto } from './dto/index.js';
 import { Player } from './entities/player.entity.js';
-import { Team } from '#/modules/teams/entities/team.entity.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
-import { CommonService } from '#/modules/common/common.service.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 
 @Injectable()
 export class PlayersService {

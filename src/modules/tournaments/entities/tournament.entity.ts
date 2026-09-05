@@ -11,8 +11,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
-import { Category } from '#/modules/categories/entities/category.entity.js';
-import { Team } from '#/modules/teams/entities/team.entity.js';
+import { Category } from '../../categories/entities/category.entity.js';
+import { Team } from '../../teams/entities/team.entity.js';
 
 @Entity({ name: 'tournaments' })
 export class Tournament {

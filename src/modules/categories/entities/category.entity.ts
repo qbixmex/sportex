@@ -8,8 +8,8 @@ import {
   ManyToMany,
   OneToMany,
 } from "typeorm";
-import { Tournament } from "#/modules/tournaments/entities/tournament.entity.js";
-import { Team } from "#/modules/teams/entities/team.entity.js";
+import { Tournament } from "../../tournaments/entities/tournament.entity.js";
+import { Team } from "../../teams/entities/team.entity.js";
 
 @Entity({ name: 'categories' })
 export class Category {

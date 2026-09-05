@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto/index.js';
 import { UserService } from './user.service.js';
-import { Auth } from '#/modules/auth/decorators/auth.decorator.js';
-import { VALID_ROLES } from '#/modules/auth/enums/index.js';
+import { Auth } from '../auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '../auth/enums/index.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Controller('users')

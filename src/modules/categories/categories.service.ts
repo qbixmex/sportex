@@ -4,8 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { isUUID } from 'class-validator';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/index.js';
 import { Category } from './entities/category.entity.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
-import { CommonService } from '#/modules/common/common.service.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 
 @Injectable()
 export class CategoriesService {

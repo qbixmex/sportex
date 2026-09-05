@@ -5,11 +5,11 @@ import {
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { CommonService } from '#/modules/common/common.service.js';
+import { CommonService } from '../common/common.service.js';
 import { Announcement } from './entities/announcement.entity.js';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto.js';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto.js';
-import { PaginationDto } from '#/modules/common/dto/pagination.dto.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 export class AnnouncementsService {
   constructor(

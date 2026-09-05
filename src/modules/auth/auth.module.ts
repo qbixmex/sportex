@@ -6,8 +6,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { JwtStrategy } from './strategies/jwt.strategy.js';
-import { CommonModule } from '#/modules/common/common.module.js';
-import { User } from '#/modules/users/entities/user.entity.js';
+import { CommonModule } from '../common/common.module.js';
+import { User } from '../users/entities/user.entity.js';
 
 @Module({
   imports: [
