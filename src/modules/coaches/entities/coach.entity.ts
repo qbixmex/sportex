@@ -1,3 +1,4 @@
+import type { Relation } from 'typeorm';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Team } from '@/modules/teams/entities/team.entity';
+import { Team } from '../../teams/entities/team.entity.js';
 
 @Entity({ name: 'coaches' })
 export class Coach {
@@ -88,5 +89,5 @@ export class Coach {
 
   // Relationships
   @OneToMany(() => Team, (team) => team.coach)
-  teams!: Team[];
+  teams!: Relation<Team>[];
 }

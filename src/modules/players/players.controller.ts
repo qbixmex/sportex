@@ -10,12 +10,11 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
-import { PlayersService } from './players.service';
-import { CreatePlayerDto } from './dto/create-player.dto';
-import { UpdatePlayerDto } from './dto/update-player.dto';
-import { PaginationDto } from '@/common/dto/pagination.dto';
-import { Auth } from '@/auth/decorators/auth.decorator';
-import { VALID_ROLES } from '@/auth/enums';
+import { PlayersService } from './players.service.js';
+import { CreatePlayerDto, UpdatePlayerDto } from './dto/index.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { Auth } from '../auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '../auth/enums/index.js';
 
 @Auth(VALID_ROLES.ADMIN)
 @Controller('players')

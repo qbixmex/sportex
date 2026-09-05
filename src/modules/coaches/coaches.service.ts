@@ -5,11 +5,11 @@ import {
 } from '@nestjs/common';
 import { DeepPartial, In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCoachDto, UpdateCoachDto } from './dto';
-import { Coach } from './entities/coach.entity';
-import { Team } from '@/modules/teams/entities/team.entity';
-import { PaginationDto } from '@/common/dto/pagination.dto';
-import { CommonService } from '@/common/common.service';
+import { CreateCoachDto, UpdateCoachDto } from './dto/index.js';
+import { Coach } from './entities/coach.entity.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 
 @Injectable()
 export class CoachesService {

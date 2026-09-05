@@ -1,12 +1,12 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { compareSync, hashSync } from 'bcryptjs';
-import { RegisterUserDto, LoginUserDto } from './dto';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { CommonService } from '../common/common.service';
+import { RegisterUserDto, LoginUserDto } from './dto/index.js';
+import { JwtPayload } from './interfaces/jwt-payload.interface.js';
+import { CommonService } from '../common/common.service.js';
+import { User } from '../users/entities/user.entity.js';
 
 @Injectable()
 export class AuthService {
@@ -86,7 +86,7 @@ export class AuthService {
     };
   }
 
-  async checkStatus(user: User) {
+  checkStatus(user: User) {
     return {
       ...user,
       token: this.getJwtToken({ id: user.id }),

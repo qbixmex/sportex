@@ -10,11 +10,11 @@ import {
   ParseUUIDPipe,
   Query,
 } from '@nestjs/common';
-import { FieldsService } from './fields.service';
-import { CreateFieldDto, UpdateFieldDto } from './dto';
-import { Auth } from '@/auth/decorators/auth.decorator';
-import { VALID_ROLES } from '@/auth/enums';
-import { PaginationDto } from '@/common/dto/pagination.dto';
+import { FieldsService } from './fields.service.js';
+import { CreateFieldDto, UpdateFieldDto } from './dto/index.js';
+import { Auth } from '../auth/decorators/auth.decorator.js';
+import { VALID_ROLES } from '../auth/enums/index.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
 @Controller('fields')

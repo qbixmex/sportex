@@ -1,7 +1,7 @@
 ## 1. Entidad y relación
 
 - [x] 1.1 Crear `src/modules/coaches/entities/coach.entity.ts` con los campos `id` (uuid), `name` (varchar, requerido), `email` (varchar, `unique: true`, requerido), `phone`, `age` (int), `nationality`, `imageUrl`, `imagePublicId`, `description` (opcionales), `active` (boolean, default `false`), `createdAt` y `updatedAt`; verificar que la entidad se compile (`bun run build`)
-- [x] 1.2 Añadir la relación `@OneToMany(() => Team, (team) => team.coach) teams: Team[]` en `Coach`, con el import a `@/modules/teams/entities/team.entity`; verificar que la entidad se compile
+- [x] 1.2 Añadir la relación `@OneToMany(() => Team, (team) => team.coach) teams: Team[]` en `Coach`, con el import a `../../teams/entities/team.entity`; verificar que la entidad se compile
 - [x] 1.3 Añadir en `Team` la relación `@ManyToOne(() => Coach, (coach) => coach.teams, { onDelete: 'SET NULL' })` + `@JoinColumn({ name: 'coach_id' })` con `coach?` y `coachId?`; verificar que la entidad se compile (`bun run build`)
 
 ## 2. DTOs de Coach

@@ -1,3 +1,4 @@
+import type { Relation } from 'typeorm';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { FieldTeam } from './field-team.entity';
+import { FieldTeam } from './field-team.entity.js';
 
 @Entity({ name: 'fields' })
 export class Field {
@@ -75,5 +76,5 @@ export class Field {
 
   // Relationships
   @OneToMany(() => FieldTeam, (fieldTeam) => fieldTeam.field)
-  fieldTeams!: FieldTeam[];
+  fieldTeams!: Relation<FieldTeam>[];
 }

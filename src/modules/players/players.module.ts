@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { PlayersService } from './players.service';
-import { PlayersController } from './players.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Player } from './entities/player.entity';
-import { Team } from '@/modules/teams/entities/team.entity';
-import { AuthModule } from '@/auth/auth.module';
-import { CommonModule } from '@/common/common.module';
+import { PlayersService } from './players.service.js';
+import { PlayersController } from './players.controller.js';
+import { Player } from './entities/player.entity.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { AuthModule } from '../auth/auth.module.js';
+import { CommonModule } from '../common/common.module.js';
 
 @Module({
   controllers: [PlayersController],

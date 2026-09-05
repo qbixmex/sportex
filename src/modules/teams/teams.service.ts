@@ -5,13 +5,14 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateTeamDto, UpdateTeamDto } from './dto';
-import { Team } from './entities/team.entity';
-import { Tournament } from '@/modules/tournaments/entities/tournament.entity';
-import { Category } from '@/modules/categories/entities/category.entity';
-import { Player } from '@/modules/players/entities/player.entity';
-import { PaginationDto } from '@/common/dto/pagination.dto';
-import { CommonService } from '@/common/common.service';
+import { CreateTeamDto } from './dto/index.js';
+import { UpdateTeamDto } from './dto/update-team.dto.js';
+import { Team } from './entities/team.entity.js';
+import { Tournament } from '../tournaments/entities/tournament.entity.js';
+import { Category } from '../categories/entities/category.entity.js';
+import { Player } from '../players/entities/player.entity.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 import { isUUID } from 'class-validator';
 
 @Injectable()
@@ -144,8 +145,6 @@ export class TeamsService {
   }
 
   async update(id: string, dto: UpdateTeamDto) {
-    console.log(dto);
-
     const team = await this.teamRepository.findOne({ where: { id } });
 
     if (!team) {
@@ -154,13 +153,11 @@ export class TeamsService {
       );
     }
 
-    if (dto.tournamentId !== undefined) {
-      if (dto.tournamentId) {
-        await this.ensureTournamentExists(dto.tournamentId);
-        team.tournament = { id: dto.tournamentId } as Tournament;
-      } else {
-        team.tournament = undefined as unknown as Tournament;
-      }
+    if (dto.tournamentId) {
+      await this.ensureTournamentExists(dto.tournamentId);
+      team.tournament = { id: dto.tournamentId } as Tournament;
+    } else {
+      team.tournament = undefined as unknown as Tournament;
     }
 
     if (dto.categoryId !== undefined) {

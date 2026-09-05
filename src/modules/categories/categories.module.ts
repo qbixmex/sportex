@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
-import { CategoriesController } from './categories.controller';
+import { CategoriesService } from './categories.service.js';
+import { CategoriesController } from './categories.controller.js';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Category } from './entities/category.entity';
-import { AuthModule } from '@/auth/auth.module';
-import { CommonModule } from '@/common/common.module';
+import { Category } from './entities/category.entity.js';
+import { AuthModule } from '../auth/auth.module.js';
+import { CommonModule } from '../common/common.module.js';
 
 @Module({
   controllers: [CategoriesController],

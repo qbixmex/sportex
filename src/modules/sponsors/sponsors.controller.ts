@@ -10,12 +10,11 @@ import {
   Version,
   Query,
 } from '@nestjs/common';
-import { Auth } from '@/auth/decorators/auth.decorator';
-import { SponsorsService } from './sponsors.service';
-import { CreateSponsorDto } from './dto/create-sponsor.dto';
-import { UpdateSponsorDto } from './dto/update-sponsor.dto';
-import { VALID_ROLES } from '@/auth/enums';
-import { PaginationDto } from '@/common/dto/pagination.dto';
+import { Auth } from '../auth/decorators/auth.decorator.js';
+import { SponsorsService } from './sponsors.service.js';
+import { CreateSponsorDto, UpdateSponsorDto } from './dto/index.js';
+import { VALID_ROLES } from '../auth/enums/index.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
 
 @Auth(VALID_ROLES.ADMIN)
 @Controller('sponsors')

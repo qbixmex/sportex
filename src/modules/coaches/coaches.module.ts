@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { CoachesService } from './coaches.service';
-import { CoachesController } from './coaches.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Coach } from './entities/coach.entity';
-import { Team } from '@/modules/teams/entities/team.entity';
-import { AuthModule } from '@/auth/auth.module';
-import { CommonModule } from '@/common/common.module';
+import { CoachesController } from './coaches.controller.js';
+import { CoachesService } from './coaches.service.js';
+import { Coach } from './entities/coach.entity.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { AuthModule } from '../auth/auth.module.js';
+import { CommonModule } from '../common/common.module.js';
 
 @Module({
   controllers: [CoachesController],

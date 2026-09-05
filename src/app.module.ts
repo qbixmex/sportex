@@ -1,22 +1,23 @@
 import { join } from 'node:path';
+import { Module } from '@nestjs/common';
+import { envConfiguration } from './config/env.config.js';
+import * as pg from 'pg';
+
+// Modules
 import { ConfigModule } from '@nestjs/config';
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersModule } from './modules/users/user.module';
-import { ApiKeyMiddleware } from './middleware/api-key.middleware';
-import { UserController } from './modules/users/user.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TournamentsModule } from './modules/tournaments/tournaments.module';
-import { envConfiguration } from './config/env.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommonModule } from './common/common.module';
-import { AuthModule } from './auth/auth.module';
-import { CategoriesModule } from './modules/categories/categories.module';
-import { TeamsModule } from './modules/teams/teams.module';
-import { PlayersModule } from './modules/players/players.module';
-import { CoachesModule } from './modules/coaches/coaches.module';
-import { FieldsModule } from './modules/fields/fields.module';
-import { SponsorsModule } from './modules/sponsors/sponsors.module';
-import { AnnouncementsModule } from './modules/announcements/announcements.module';
+import { CommonModule } from './modules/common/common.module.js';
+import { AuthModule } from './modules/auth/auth.module.js';
+import { UsersModule } from './modules/users/user.module.js';
+import { TournamentsModule } from './modules/tournaments/tournaments.module.js';
+import { CategoriesModule } from './modules/categories/categories.module.js';
+import { CoachesModule } from './modules/coaches/coaches.module.js';
+import { TeamsModule } from './modules/teams/teams.module.js';
+import { FieldsModule } from './modules/fields/fields.module.js';
+import { PlayersModule } from './modules/players/players.module.js';
+import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
+import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
 
 @Module({
   imports: [
@@ -25,24 +26,22 @@ import { AnnouncementsModule } from './modules/announcements/announcements.modul
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST ?? 'localhost',
-      port: Number(process.env.DB_PORT ?? ''),
-      database: process.env.DB_NAME ?? '',
-      username: process.env.DB_USER ?? '',
-      password: process.env.DB_PASSWORD ?? '',
+      driver: pg,
+      url: process.env.DATABASE_URL ?? undefined,
       autoLoadEntities: true,
       synchronize: false,
       logging: false, // for debugging sql sentences
+      ssl: false,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(process.cwd(), '..', 'public'),
     }),
-    UsersModule,
-    AuthModule,
-    TournamentsModule,
     CommonModule,
-    CategoriesModule,
+    AuthModule,
+    UsersModule,
     TeamsModule,
+    TournamentsModule,
+    CategoriesModule,
     PlayersModule,
     CoachesModule,
     FieldsModule,
@@ -52,8 +51,4 @@ import { AnnouncementsModule } from './modules/announcements/announcements.modul
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ApiKeyMiddleware).forRoutes(UserController);
-  }
-}
+export class AppModule {}

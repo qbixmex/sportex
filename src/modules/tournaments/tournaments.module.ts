@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TournamentsService } from './tournaments.service';
-import { TournamentsController } from './tournaments.controller';
+import { TournamentsService } from './tournaments.service.js';
+import { TournamentsController } from './tournaments.controller.js';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Tournament } from './entities/tournament.entity';
-import { AuthModule } from '@/auth/auth.module';
-import { CommonModule } from '@/common/common.module';
+import { Tournament } from './entities/tournament.entity.js';
+import { AuthModule } from '../auth/auth.module.js';
+import { CommonModule } from '../common/common.module.js';
 
 @Module({
   controllers: [TournamentsController],

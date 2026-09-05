@@ -3,39 +3,64 @@
 ## Project setup
 
 ```bash
-> bun install
+bun install
 ```
 
 ## Compile and run the project
 
+**Development**
+
 ```bash
-# development
-> npm run start
+bun start
+```
 
-# watch mode
-> npm run start:dev
+**Watch Mode**
 
-# production mode
-> npm run start:prod
+```bash
+bun start:dev
+```
+
+**Production Mode**
+
+```bash
+bun start:prod
+```
+
+## Linting
+
+```bash
+bun lint
+```
+
+## Check typescript errors
+
+```bash
+$ bun type:check
 ```
 
 ## Run tests
 
+**Running Tests**
+
 ```bash
-# unit tests
-$ bun test
+bun test
+```
 
-# e2e tests
-$ bun run test:e2e
+**E2E Tests**
 
-# test coverage
-$ bun run test:cov
+```bash
+bun run test:e2e
+```
+
+**Test Coverage**
+```bash
+bun run test:cov
 ```
 
 ## Deployment
 
 ```bash
-$ npm install -g @nestjs/mau
+$ bun install -g @nestjs/mau
 $ mau deploy
 ```
 
@@ -48,39 +73,34 @@ docker compose -p sportex up -d
 # -d detach mode
 ```
 
-**Create your migrations:**
+## Database Migrations
+
+**Generate new migration:**
 
 ```bash
-npx prisma migrate dev --name init
-
-# --name migration_name
+bun migration:generate --name create_"placeholder"_table
 ```
 
-**Prisma Client:**
+**Run migration:**
 
 ```bash
-npx prisma generate
+bun migration:run
 ```
 
-## Prisma Studio
-
-**You can check your database in the browser**
+**Rollback migration:**
 
 ```bash
-npx prisma studio
+bun migration:revert
 ```
 
 ## Generate Auth Secret Key
 
 ```bash
 node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+```
 
-# It will generate something like this:
-'1f135548a57a4e2c043d6eb6a6b5e144 and more ...'
+**Alternative with Open SSL**
 
-# ------- Alternative with Open SSL -------
+```bash
 openssl rand -base64 32
-
-# It will generate something like this:
-'W4w2IBUAoVqqTI3ODmyvmJa ...'
 ```

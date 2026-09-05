@@ -1,2 +1,2 @@
-export { CreateTournamentDto } from './create-tournament.dto';
-export { UpdateTournamentDto } from './update-tournament.dto';
+export { CreateTournamentDto } from './create-tournament.dto.js';
+export { UpdateTournamentDto } from './update-tournament.dto.js';

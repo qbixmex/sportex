@@ -1,3 +1,4 @@
+import type { Relation } from 'typeorm';
 import {
   Column,
   CreateDateColumn,
@@ -7,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Team } from '@/modules/teams/entities/team.entity';
+import { Team } from '../../teams/entities/team.entity.js';
 
 @Entity({ name: 'players' })
 export class Player {
@@ -85,5 +86,5 @@ export class Player {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'team_id' })
-  team?: Team;
+  team?: Relation<Team>;
 }

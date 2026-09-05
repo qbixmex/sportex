@@ -1,12 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationDto } from '@/common/dto/pagination.dto';
 import { isUUID } from 'class-validator';
-import { CommonService } from '@/common/common.service';
+import { CreateCategoryDto, UpdateCategoryDto } from './dto/index.js';
+import { Category } from './entities/category.entity.js';
+import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { CommonService } from '../common/common.service.js';
 
 @Injectable()
 export class CategoriesService {
