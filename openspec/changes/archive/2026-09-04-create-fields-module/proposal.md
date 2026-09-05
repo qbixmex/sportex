@@ -4,13 +4,13 @@ La plataforma gestiona equipos, jugadores, entrenadores, torneos y categorías, 
 
 ## What Changes
 
-- Crear el módulo `FieldsModule` en `src/modules/fields/` con entidad, servicio, controlador y DTOs.
+- Crear el módulo `fields` con su API CRUD.
 - Crear la entidad `Field` (tabla `fields`) con los campos: `id` (uuid PK), `name`, `permalink` (opcional), `city` (opcional), `state` (opcional), `country` (opcional), `address` (opcional), `map` (opcional), `createdAt`, `updatedAt`.
 - Crear la entidad pivote dedicada `FieldTeam` (tabla `field_team`) con columnas explícitas `fieldId` y `teamId` (PK compuesta), vinculando `Field` y `Team` (muchos a muchos).
 - Añadir la relación inversa en la entidad `Team` para permitir consultar las canchas asociadas a un equipo.
-- Exponer CRUD completo en `/api/v1/fields` (crear, listar paginado, obtener por id/permalink, actualizar, eliminar). Gestionado con `@Auth(VALID_ROLES.ADMIN)` y versionado `v1`, igual que el resto de módulos.
-- Crear la migración TypeORM para las tablas `fields` y `field_team`.
-- Registrar `FieldsModule` en `AppModule`.
+- Exponer CRUD completo de canchas (crear, listar paginado, obtener por id/permalink, actualizar, eliminar), protegido con autenticación de administrador y versionado, igual que el resto de módulos.
+- Crear la migración de base de datos para las tablas `fields` y `field_team`.
+- Registrar el módulo `fields` en la aplicación.
 - Sin cambios que rompan la API existente (**BREAKING**: ninguno; es una capacidad nueva).
 
 ## Capabilities
@@ -23,7 +23,7 @@ La plataforma gestiona equipos, jugadores, entrenadores, torneos y categorías, 
 
 ## Impact
 
-- **Código nuevo**: `src/modules/fields/entities/field.entity.ts`, `src/modules/fields/entities/field-team.entity.ts`, `src/modules/fields/dto/*`, `src/modules/fields/fields.service.ts`, `src/modules/fields/fields.controller.ts`, `src/modules/fields/fields.module.ts`, `src/modules/fields/fields.service.spec.ts`.
-- **Modificaciones**: `src/modules/teams/entities/team.entity.ts` (relación `FieldTeam`), `src/app.module.ts` (registro del módulo).
+- **Código nuevo**: módulo `fields` (entidades `Field` y `FieldTeam` y su API CRUD).
+- **Modificaciones**: la entidad de equipo incorpora la relación con las canchas; el módulo se registra en la aplicación.
 - **Base de datos**: nueva migración que crea las tablas `fields` y `field_team` (esta última con PK compuesta `field_id` + `team_id`).
-- **API**: nuevas rutas `/api/v1/fields` (CRUD).
+- **API**: nuevas rutas de `fields` (CRUD).
