@@ -133,7 +133,7 @@ export class PlayersService {
 
       return {
         message: 'Jugador actualizado exitosamente 👍',
-        data: updatedPlayer,
+        player: updatedPlayer,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
