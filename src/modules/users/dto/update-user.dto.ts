@@ -4,7 +4,7 @@ import { IsArray, IsBoolean, IsEnum, IsOptional } from "class-validator";
 import { VALID_ROLES } from "../../../auth/enums";
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-  @IsBoolean()
+  @IsBoolean({ message: '¡ La propiedad debe ser del tipo boleano !' })
   @IsOptional()
   emailVerified?: boolean;
 
