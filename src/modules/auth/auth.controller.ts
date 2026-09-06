@@ -33,7 +33,7 @@ export class AuthController {
 
   @Version('1')
   @Get('check-status')
-  @Auth(VALID_ROLES.USER)
+  @Auth(VALID_ROLES.USER, VALID_ROLES.ADMIN)
   checkAuthStatus(@GetUser() user: User) {
     return this.authService.checkStatus(user);
   }
