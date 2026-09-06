@@ -18,6 +18,7 @@ import { FieldsModule } from './modules/fields/fields.module.js';
 import { PlayersModule } from './modules/players/players.module.js';
 import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
 import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
+import { VideosModule } from './modules/videos/videos.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -49,6 +50,7 @@ import { AppService } from './app.service.js';
     FieldsModule,
     SponsorsModule,
     AnnouncementsModule,
+    VideosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
