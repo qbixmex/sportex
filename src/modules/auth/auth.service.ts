@@ -31,18 +31,6 @@ export class AuthService {
 
       return {
         message: 'El registro fue realizado exitosamente 👍',
-        data: {
-          id: newUser.id,
-          name: newUser.name,
-          username: newUser.username,
-          email: newUser.email,
-          imageUrl: newUser.imageUrl,
-          imagePublicId: newUser.imagePublicId,
-          isActive: newUser.isActive,
-          roles: newUser.roles,
-          createdAt: newUser.createdAt,
-          updatedAt: newUser.updatedAt,
-        },
         token: this.getJwtToken({ id: newUser.id }),
       };
     } catch (error) {
@@ -88,7 +76,7 @@ export class AuthService {
 
   checkStatus(user: User) {
     return {
-      ...user,
+      user,
       token: this.getJwtToken({ id: user.id }),
     };
   }
