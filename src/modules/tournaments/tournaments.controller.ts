@@ -16,8 +16,8 @@ import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { Auth } from '../auth/decorators/auth.decorator.js';
 import { VALID_ROLES } from '../auth/enums/index.js';
 
-@Auth(VALID_ROLES.ADMIN)
 @Controller('tournaments')
+@Auth(VALID_ROLES.ADMIN)
 export class TournamentsController {
   constructor(private readonly tournamentsService: TournamentsService) {}
 

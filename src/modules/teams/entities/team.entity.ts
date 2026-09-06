@@ -141,7 +141,4 @@ export class Team {
 
   @OneToMany(() => FieldTeam, (fieldTeam) => fieldTeam.team)
   fieldTeams!: Relation<FieldTeam>[];
-
-  @Column({ select: false, insert: false, update: false, nullable: true })
-  playersCount?: number;
 }
