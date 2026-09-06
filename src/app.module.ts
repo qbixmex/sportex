@@ -18,6 +18,8 @@ import { FieldsModule } from './modules/fields/fields.module.js';
 import { PlayersModule } from './modules/players/players.module.js';
 import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
 import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
 
 @Module({
   imports: [
@@ -48,7 +50,7 @@ import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
     SponsorsModule,
     AnnouncementsModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
