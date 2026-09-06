@@ -11,10 +11,13 @@ import { META_ROLES } from '../decorators/role-protected.decorator.js';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private readonly reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
-    const validRoles: string[] = this.reflector.get(META_ROLES, context.getHandler());
+    const validRoles: string[] = this.reflector.getAllAndOverride(META_ROLES, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
     const request = context.switchToHttp().getRequest();
     const user = request.user as User;
 
@@ -31,7 +34,7 @@ export class UserRoleGuard implements CanActivate {
     } else {
       return true;
     }
-   
+
     throw new ForbiddenException(
       '¡ No estas autorizado para realizar esta acción !'
     );
