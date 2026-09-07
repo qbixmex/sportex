@@ -1,13 +1,16 @@
+import type { Relation } from 'typeorm';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { formatPermalinkOrSlug } from '../../../utils/format_permalink.util.js';
+import { GalleryImage } from '../../gallery-images/entities/gallery-image.entity.js';
 
 @Entity({ name: 'galleries' })
 export class Gallery {
@@ -44,6 +47,9 @@ export class Gallery {
     nullable: true,
   })
   updatedAt?: Date;
+
+  @OneToMany(() => GalleryImage, (galleryImage) => galleryImage.gallery)
+  images?: Relation<GalleryImage[]>;
 
   @BeforeInsert()
   transformPermalinkInsert() {
