@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { formatPermalinkOrSlug } from '../../../utils/format_permalink.util.js';
 
-@Entity({ name: 'videos' })
-export class Video {
+@Entity({ name: 'galleries' })
+export class Gallery {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -26,32 +26,6 @@ export class Video {
     unique: true,
   })
   permalink!: string;
-
-  @Column({
-    type: 'timestamptz',
-    name: 'published_date',
-    default: () => 'now()',
-  })
-  publishedDate!: Date;
-
-  @Column({
-    type: 'varchar',
-    name: 'description',
-    nullable: true,
-  })
-  description?: string;
-
-  @Column({
-    type: 'varchar',
-    name: 'url',
-  })
-  url!: string;
-
-  @Column({
-    type: 'varchar',
-    name: 'platform',
-  })
-  platform!: string;
 
   @Column({
     type: 'boolean',

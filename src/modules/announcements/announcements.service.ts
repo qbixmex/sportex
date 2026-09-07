@@ -10,6 +10,7 @@ import { Announcement } from './entities/announcement.entity.js';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto.js';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
+import { formatPermalinkOrSlug } from '../../utils/format_permalink.util.js';
 
 export class AnnouncementsService {
   constructor(
@@ -64,7 +65,7 @@ export class AnnouncementsService {
   }
 
   async create(dto: CreateAnnouncementDto) {
-    const permalink = Announcement.formatPermalink(
+    const permalink = formatPermalinkOrSlug(
       dto.permalink !== undefined ? dto.permalink : dto.title,
     );
 
@@ -112,7 +113,7 @@ export class AnnouncementsService {
     let permalinkChanged = false;
 
     if (dto.permalink !== undefined) {
-      const permalink = Announcement.formatPermalink(dto.permalink);
+      const permalink = formatPermalinkOrSlug(dto.permalink);
 
       if (!permalink) {
         throw new BadRequestException(
@@ -125,7 +126,7 @@ export class AnnouncementsService {
         permalinkChanged = true;
       }
     } else if (dto.title !== undefined) {
-      const permalink = Announcement.formatPermalink(dto.title);
+      const permalink = formatPermalinkOrSlug(dto.title);
 
       if (permalink !== announcement.permalink) {
         updateData.permalink = permalink;

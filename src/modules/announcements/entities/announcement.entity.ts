@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { formatPermalinkOrSlug } from '../../../utils/format_permalink.util.js';
 
 @Entity({ name: 'announcements' })
 export class Announcement {
@@ -80,22 +81,11 @@ export class Announcement {
 
   @BeforeInsert()
   transformPermalinkInsert() {
-    this.permalink = Announcement.formatPermalink(this.permalink ?? this.title);
+    this.permalink = formatPermalinkOrSlug(this.permalink ?? this.title);
   }
 
   @BeforeUpdate()
   transformPermalinkUpdate() {
-    this.permalink = Announcement.formatPermalink(this.permalink ?? this.title);
-  }
-
-  static formatPermalink(value: string) {
-    return value
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // remove accents
-      .replace(/\.[^/.]+$/, '') // removes extension
-      .trim() // removes trailing spaces
-      .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric characters with dashes
-      .replace(/^-+|-+$/g, ''); // remove leading and trailing dashes
+    this.permalink = formatPermalinkOrSlug(this.permalink ?? this.title);
   }
 }

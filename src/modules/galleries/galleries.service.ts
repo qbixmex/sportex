@@ -6,55 +6,55 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CommonService } from '../common/common.service.js';
-import { Video } from './entities/video.entity.js';
-import { CreateVideoDto } from './dto/create-video.dto.js';
-import { UpdateVideoDto } from './dto/update-video.dto.js';
+import { Gallery } from './entities/gallery.entity.js';
+import { CreateGalleryDto } from './dto/create-gallery.dto.js';
+import { UpdateGalleryDto } from './dto/update-gallery.dto.js';
 import { PaginationDto } from '../common/dto/pagination.dto.js';
 import { formatPermalinkOrSlug } from '../../utils/format_permalink.util.js';
 
-export class VideosService {
+export class GalleriesService {
   constructor(
-    @InjectRepository(Video)
-    private readonly videoRepository: Repository<Video>,
+    @InjectRepository(Gallery)
+    private readonly galleryRepository: Repository<Gallery>,
 
     private readonly commonService: CommonService,
   ) {}
 
   async findAll({ page = 1, take = 10 }: PaginationDto) {
-    const [videosCount, videos] = await Promise.all([
-      this.videoRepository.createQueryBuilder('video').getCount(),
-      this.videoRepository
-        .createQueryBuilder('video')
-        .orderBy('video.createdAt', 'ASC')
+    const [galleriesCount, galleries] = await Promise.all([
+      this.galleryRepository.createQueryBuilder('gallery').getCount(),
+      this.galleryRepository
+        .createQueryBuilder('gallery')
+        .orderBy('gallery.createdAt', 'ASC')
         .take(take)
         .skip((page - 1) * take)
         .getMany(),
     ]);
 
     return {
-      videos,
+      galleries,
       pagination: {
         currentPage: +page,
-        totalPages: Math.ceil(videosCount / take),
+        totalPages: Math.ceil(galleriesCount / take),
       },
     };
   }
 
   async findById(id: string) {
-    const video = await this.videoRepository.findOne({
+    const gallery = await this.galleryRepository.findOne({
       where: { id },
     });
 
-    if (!video) {
+    if (!gallery) {
       throw new NotFoundException(
-        `¡ El video con id: [${id}], no existe en la base de datos !`
+        `¡ La galería con id: [${id}], no existe en la base de datos !`
       );
     }
 
-    return video;
+    return gallery;
   }
 
-  async create(dto: CreateVideoDto) {
+  async create(dto: CreateGalleryDto) {
     const permalink = formatPermalinkOrSlug(
       dto.permalink !== undefined ? dto.permalink : dto.title,
     );
@@ -65,41 +65,41 @@ export class VideosService {
       );
     }
 
-    const existingVideo = await this.videoRepository.findOne({
+    const existingGallery = await this.galleryRepository.findOne({
       where: { permalink },
     });
 
-    if (existingVideo) {
+    if (existingGallery) {
       throw new ConflictException(
-        `¡ El video con el enlace permanente [${permalink}] ya existe, elija otro título !`
+        `¡ La galería con el enlace permanente [${permalink}] ya existe, elija otro título !`
       );
     }
 
     try {
-      const video = this.videoRepository.create({
+      const gallery = this.galleryRepository.create({
         ...dto,
         permalink,
         active: dto.active ?? false,
       });
-      await this.videoRepository.save(video);
+      await this.galleryRepository.save(gallery);
 
       return {
-        message: '¡ Video creado satisfactoriamente 👍 !',
-        video,
+        message: '¡ Galería creada satisfactoriamente 👍 !',
+        gallery,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
     }
   }
 
-  async update(id: string, dto: UpdateVideoDto) {
-    const video = await this.videoRepository.findOne({
+  async update(id: string, dto: UpdateGalleryDto) {
+    const gallery = await this.galleryRepository.findOne({
       where: { id },
     });
 
-    if (!video) {
+    if (!gallery) {
       throw new NotFoundException(
-        `¡ El video con id: [${id}], no existe en la base de datos !`
+        `¡ La galería con id: [${id}], no existe en la base de datos !`
       );
     }
 
@@ -115,39 +115,39 @@ export class VideosService {
         );
       }
 
-      if (permalink !== video.permalink) {
+      if (permalink !== gallery.permalink) {
         updateData.permalink = permalink;
         permalinkChanged = true;
       }
     } else if (dto.title !== undefined) {
       const permalink = formatPermalinkOrSlug(dto.title);
 
-      if (permalink !== video.permalink) {
+      if (permalink !== gallery.permalink) {
         updateData.permalink = permalink;
         permalinkChanged = true;
       }
     }
 
     if (permalinkChanged) {
-      const existingVideo = await this.videoRepository.findOne({
+      const existingGallery = await this.galleryRepository.findOne({
         where: { permalink: updateData.permalink },
       });
 
-      if (existingVideo && existingVideo.id !== id) {
+      if (existingGallery && existingGallery.id !== id) {
         throw new ConflictException(
-          `¡ El video con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink !`
+          `¡ La galería con el enlace permanente [${updateData.permalink}] ya existe, elija otro permalink !`
         );
       }
     }
 
-    const updatedVideo = this.videoRepository.merge(video, updateData);
+    const updatedGallery = this.galleryRepository.merge(gallery, updateData);
 
     try {
-      await this.videoRepository.save(updatedVideo);
+      await this.galleryRepository.save(updatedGallery);
 
       return {
-        message: '¡ Video actualizado exitosamente 👍 !',
-        video: updatedVideo,
+        message: '¡ Galería actualizada exitosamente 👍 !',
+        gallery: updatedGallery,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
@@ -155,22 +155,22 @@ export class VideosService {
   }
 
   async remove(id: string) {
-    const video = await this.videoRepository.findOne({
+    const gallery = await this.galleryRepository.findOne({
       where: { id },
     });
 
-    if (!video) {
+    if (!gallery) {
       throw new NotFoundException(
-        `¡ El video con id: [${id}], no existe en la base de datos !`
+        `¡ La galería con id: [${id}], no existe en la base de datos !`
       );
     }
 
     try {
-      await this.videoRepository.remove(video);
+      await this.galleryRepository.remove(gallery);
 
       return {
-        message: '¡ Video eliminado satisfactoriamente !',
-        video,
+        message: '¡ Galería eliminada satisfactoriamente !',
+        gallery,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
