@@ -137,7 +137,6 @@ describe('GalleriesService', () => {
       expect(repo.remove).toHaveBeenCalledWith(existing);
       expect(result).toEqual({
         message: expect.stringContaining('eliminada'),
-        gallery: existing,
       });
     });
   });
