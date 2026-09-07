@@ -170,7 +170,6 @@ export class GalleriesService {
 
       return {
         message: '¡ Galería eliminada satisfactoriamente !',
-        gallery,
       };
     } catch (error) {
       this.commonService.handleExceptions(error);
