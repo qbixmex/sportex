@@ -19,6 +19,7 @@ import { PlayersModule } from './modules/players/players.module.js';
 import { AnnouncementsModule } from './modules/announcements/announcements.module.js';
 import { SponsorsModule } from './modules/sponsors/sponsors.module.js';
 import { VideosModule } from './modules/videos/videos.module.js';
+import { GalleriesModule } from './modules/galleries/galleries.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -51,6 +52,7 @@ import { AppService } from './app.service.js';
     SponsorsModule,
     AnnouncementsModule,
     VideosModule,
+    GalleriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
