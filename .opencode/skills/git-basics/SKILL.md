@@ -18,6 +18,7 @@ I guide users through essential Git commands for individual development workflow
 - Regularly use `git log --oneline --all` to visualize commit history.
 - Avoid direct pushes to `main` or `master` branches.
 - Prefer clear and descriptive branch names.
+- All verbs must be in past tense like "created", "updated", "added", "fixed", etc.
 
 ## Essential Commands Covered
 
