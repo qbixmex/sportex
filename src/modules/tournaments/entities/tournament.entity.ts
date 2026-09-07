@@ -13,6 +13,7 @@ import {
 } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity.js';
 import { Team } from '../../teams/entities/team.entity.js';
+import { formatPermalinkOrSlug } from '../../../utils/format_permalink.util.js';
 
 @Entity({ name: 'tournaments' })
 export class Tournament {
@@ -138,21 +139,11 @@ export class Tournament {
       this.permalink = this.name;
     }
 
-    this.permalink = this.formatPermalink(this.permalink);
+    this.permalink = formatPermalinkOrSlug(this.permalink);
   }
 
   @BeforeUpdate()
   transformPermalinkUpdate() {
-    this.permalink = this.formatPermalink(this.permalink);
-  }
-
-  private formatPermalink(value: string) {
-    return value.toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // remove accents
-      .replace(/\.[^/.]+$/, '') // removes extension
-      .trim() // removes trailing spaces
-      .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric characters with dashes
-      .replace(/^-+|-+$/g, ''); // remove leading and trailing dashes
+    this.permalink = formatPermalinkOrSlug(this.permalink);
   }
 }
